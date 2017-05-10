@@ -1,5 +1,5 @@
 # Reliability
-One of the key responsibilities of a website maintainer is the site's reliability. This section will cover the basics on how how to make sure your site is up and creating a safety net in case it goes down.
+This section will cover the basics on how to know if your site is up and creating a safety net in case it goes down.
 
 ## Backups
 A WordPress site is composed of two main pieces: the code/files, such as WordPress itself, themes and plugins, and the database, which holds all of your site's content.

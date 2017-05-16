@@ -13,6 +13,8 @@ If the pages on your WordPress site aren't changing for each visitor it is best 
 
 If full page caching is implemented properly WordPress won't have to do any work until the cache expires, at which point WordPress will generate the HTML, CSS and JavaScript for the browser - and the full page cache will retain those new results until the designated time expires.
 
+![Full Page Caching Response Example](/assets/full-page-caching-response-example.png)
+
 When working with caching it's important to adjust the cache duration depending on the site's needs or the needs for the individual page. For example, an e-commerce template showing the best selling products may need a short cache so the list is updated every minute. Alternatively, a single product page, which isn't changing often, can have a longer cache.
 
 The cache can also be purged even if it hasn't expired. This should be done if you publish new content. If possible only purge the cache the new content effects, rather than purging the entire cache.

@@ -25,7 +25,7 @@ Since object cache stores full objects the cached items are reuseable across mul
 
 A good example is a social media widget. A plugin may call out to a third-party API to fetch the latest social content. Rather than doing this on every page load the results can be stored in a transient. WordPress will store transients, these forms of expiring options, in the datbase. In most cases fetching the latest social posts from the database is faster than calling out to the social media API but object caching can improve this further. Rather than store those items in the database WordPress will make use of the persistent object cache, usually a fast memory store.
 
-Persistent object caching can speed up WordPress and is offered my many managed WordPress hosts or can be setup independently. You will also need a plugin to connect WordPress to the object cache. There are many [available on the plugin directory](https://wordpress.org/plugins/search/object+cache/)
+Persistent object caching can speed up WordPress and is offered my many managed WordPress hosts or can be set up independently. You will also need a plugin to connect WordPress to the object cache. There are many [available on the plugin directory](https://wordpress.org/plugins/search/object+cache/)
 
 ### Fragment Caching
 

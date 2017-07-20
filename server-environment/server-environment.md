@@ -8,6 +8,7 @@ PHP `7.0` or greater is highly encouraged but WordPress will run, with slower pe
 WordPress core makes use of PHP extensions. If the the preferred extension is missing WordPress will either have to do more work to do the task the module helps with or, in the worst case, will remove functionality. Therefore the PHP extensions listed below are recommended.
 
 * filter - Used for securely filtering user input
+* fileinfo - Used to detect mimetype of file uploads
 * xml - Used for XML parsing, such as from a third-party site 
 * pcre - Increases performance of pattern matching in code searches
 * mod_xml - Used for generating XML, such as for an XML sitemap

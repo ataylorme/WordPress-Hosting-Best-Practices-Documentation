@@ -8,7 +8,7 @@ PHP `7.0` or greater is highly encouraged but WordPress will run, with slower pe
 WordPress core makes use of PHP extensions. If the the preferred extension is missing WordPress will either have to do more work to do the task the module helps with or, in the worst case, will remove functionality. Therefore the PHP extensions listed below are recommended.
 
 * filter - Used for securely filtering user input
-* xml - Used for XML parsing, such as from a third-party site 
+* xml - Used for XML parsing, such as from a third-party site.
 * pcre - Increases performance of pattern matching in code searches
 * mod_xml - Used for generating XML, such as for an XML sitemap
 * openssl - Permits SSL-based connections to other hosts.
@@ -16,6 +16,8 @@ WordPress core makes use of PHP extensions. If the the preferred extension is mi
 * imagick - Provides better image quality for media uploads. See [WP_Image_Editor is incoming!](https://make.wordpress.org/core/2012/12/06/wp_image_editor-is-incoming/) for details. Smarter image resizing (for smaller images) and PDF thumbnail support, when Ghost Script is also available.
 
 For the sake of completeness, below is a list of the remaining PHP modules WordPress _may_ use in certain situations or if other modules are unavailable. These are fallbacks and not needed in an optimal environment, but installing them won't hurt.
+
+* xmlreader - Used for XML parsing.
 
 These extensions are used for file changes, such as updates and plugin/theme installation, when files aren't writeable on the server. The priority of the transports are: Direct, SSH2, FTP PHP Extension, FTP Sockets.
 * ssh2

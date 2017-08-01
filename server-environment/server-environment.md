@@ -10,6 +10,7 @@ WordPress core makes use of PHP extensions. If the the preferred extension is mi
 * bcmath - Used to improve the performance of math calculations.
 * curl - Performs remote request operations.
 * filter - Used for securely filtering user input.
+* fileinfo - Used to detect mimetype of file uploads
 * mod_xml - Used for generating XML, such as for an XML sitemap.
 * mysqli - Connects to MySQL for database interactions.
 * libsodium - Generates random bytes.

@@ -17,6 +17,7 @@ WordPress core makes use of PHP extensions. If the the preferred extension is mi
 
 For the sake of completeness, below is a list of the remaining PHP modules WordPress _may_ use in certain situations or if other modules are unavailable. These are fallbacks and not needed in an optimal environment, but installing them won't hurt.
 
+* gd - If Imagick isn't installed, the GD Graphics Library is used as an alternative for image manipulation.
 * xmlreader - Used for XML parsing.
 
 These extensions are used for file changes, such as updates and plugin/theme installation, when files aren't writeable on the server. The priority of the transports are: Direct, SSH2, FTP PHP Extension, FTP Sockets.

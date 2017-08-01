@@ -15,7 +15,7 @@ WordPress core makes use of PHP extensions. If the the preferred extension is mi
 * bcmath - Used to improve the performance of math calculations
 * imagick - Provides better image quality for media uploads. See [WP_Image_Editor is incoming!](https://make.wordpress.org/core/2012/12/06/wp_image_editor-is-incoming/) for details. Smarter image resizing (for smaller images) and PDF thumbnail support, when Ghost Script is also available.
 
-For the sake of completeness bleow is a list of the remaining PHP modules WordPress _may_ use in certain situations or if other modules are unavailable. These are fallbacks and not needed in an optimal environment, but installing them won't hurt.
+For the sake of completeness, below is a list of the remaining PHP modules WordPress _may_ use in certain situations or if other modules are unavailable. These are fallbacks and not needed in an optimal environment, but installing them won't hurt.
 
 These extensions are used for file changes, such as updates and plugin/theme installation, when files aren't writeable on the server. The priority of the transports are: Direct, SSH2, FTP PHP Extension, FTP Sockets.
 * ssh2

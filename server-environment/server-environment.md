@@ -21,7 +21,7 @@ WordPress core makes use of PHP extensions. If the the preferred extension is mi
 
 For the sake of completeness, below is a list of the remaining PHP modules WordPress _may_ use in certain situations or if other modules are unavailable. These are fallbacks and not needed in an optimal environment, but installing them won't hurt.
 
-* gd - If Imagick isn't installed, the GD Graphics Library is used as an alternative for image manipulation.
+* gd - If Imagick isn't installed, the GD Graphics Library is used as a functionally limited fallback for image manipulation.
 * mcrypt - Generates random bytes when libsodium isn't available.
 * xmlreader - Used for XML parsing.
 * zlib - Gzip compression and decompression.

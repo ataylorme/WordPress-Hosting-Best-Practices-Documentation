@@ -40,6 +40,13 @@ A good example is a social media widget. A plugin may call out to a third-party 
 
 Persistent object caching can speed up WordPress and is offered my many managed WordPress hosts or can be set up independently. You will also need a plugin to connect WordPress to the object cache. There are many [available on the plugin directory](https://wordpress.org/plugins/search/object+cache/)
 
+### Op-code Caching (a.k.a server-side caching)
+As mentioned in the section on full page caching, WordPress processes PHP scripts as part of producing the HTML, CSS and JavaScript for a browser to load. It takes time for the web server to read each PHP script WordPress needs, to compile the script and to run the PHP script. By default, the web server has to do this process for every single visit to every single page. Full page caching can reduce how much the web server has to do this depending on what kind of full page caching is used, but there may still be some PHP scripts that have to be read, compiled, and run for every single visit. For example, WordPress caching plugins still have to check if they need to rebuild their caches. PHP scripts also have to be read, compiled, and run for WordPress to generate any dynamic, uncached content like comments or the page for a WooCommerce store and for WordPress to show the admin dashboard. Using op-code caching can help speed up your server since it can run WordPress without having to read and compile PHP scripts for every single page visit.
+
+Op-code caching stores a compiled copy of every PHP script in the server's memory (RAM). When the web server starts processing PHP scripts for WordPress, the web server checks the op-code cache for a cached copy of the PHP script. If there is a cached copy, the web server can skip straight to running the PHP script using the cached copy instead of having to read and compile the script again. Skipping reading and compiling PHP scripts can greatly improve the web server's resource usage and enable WordPress to serve many more requests than it might have been able to otherwise.
+
+Op-code caching can make web servers use fewer resources when running WordPress; however, like with full page caching, op-code caching can cause changes to WordPress, such as installing or removing plugins and themes or updating WordPress, from showing up right away. It can be useful to manually purge the op-code cache after making any changes to the PHP files that make up WordPress.
+
 ### Fragment Caching
 
 ## Content Distribution Network (CDN)

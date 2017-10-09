@@ -116,7 +116,36 @@ Two-factor authentication can make logging into services less convenient, since 
 
 ## File System
 
+The setup of your hosting account's file system can have a large impact on the security of WordPress. Setting proper file persmissions and ownership is extremely important for ensuring unauthorized users cannot access or modify WordPress's files.
+
 ### File Permissions
+
+**This section on file permissions focuses entirely on file permissions on Linux servers. If you are using a Windows server, please consult with your hosting provider or a Windows server administrator for help setting the proper permissions.**
+
+Linux file permissions consist primarily of three components -- the permissions the owner of the file or folder has, the permissions members of the group that owns the file or folder have, and the permissions that anyone else has for accessing or modifying the file and folder. The three permission components are usually represented using three numbers in order of the owner's permission level, the group's permission level, and everyone's permission level. _There is technically a fourth component, but that is beyond what we need to know to secure WordPress. It will not be discussed here._
+
+There are three kinds of access each for the user, the group, and everyone else. They are read access, write access, and execute access. Read access lets you read the contents of the file or the directory. Write access lets you modify the file or the directory. And execute access lets you run the file like a program or a script.
+
+#### Numeric Representation of File Permissions
+Linux stores these different kinds of access internally as bits (i.e. in binary form). They are commonly represented in human-readable form as the numbers 4 (read access), 2 (write access), and 1 (execute access). These numbers are added together to represent different combinations of the three kinds of access you can have. 
+
+#### Symbolic Representation of File Permissions
+Some programs will represent the different kinds of access using letters instead of numbers. When using symbols, the kinds of access are still read access, write access, and execute access. Instead of numbers, the kinds of access are represented using "r" (read access), "w" (write access), "x" (execute access). These three letters are combined together (e.g. "rwx", "rw", "wx", etc.) to represent the different combinations of the three kinds of access you can have.
+
+#### Examples of Linux File Permissions
+| Symbolic         | Numeric         | Permissions                                                                                  |
+|:----------------:|:---------------:|:--------------------------------------------------------------------------------------------:|
+|    ----------    |       000       | no permissions                                                                               |
+|    -r--------    |       400       | read only for user                                                                           |
+|    -rw-------    |       600       | read & write only for user                                                                   |
+|    -rwx------    |       700       | read, write, & execute only for user                                                         |
+|    -rwxr-xr-x    |       755       | read, write, & execute for user, only read & execute for group and everyone else             |
+|    -rw-r--r--    |       644       | read & write for user, only read for group and everyone else                                 |
+|    -rwxrwxrwx    |       777       | read, write, and execute for user, group, and everyone else **Do not use. Security Risk.**   |
+
+#### Recommend Default Linux File Permissions
+
+The default recommended file permissions for WordPress are 755 (-rwxr-xr-x) for folders and 644 (-rw-r--r--) for files. These permissions will ensure that WordPress can function properly while protecting WordPress from having its files modified by malicious or unauthorized users.
 
 ### User Accounts
 

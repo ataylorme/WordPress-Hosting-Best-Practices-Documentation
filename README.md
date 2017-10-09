@@ -8,9 +8,10 @@ This repository serves as a documentation around WordPress hosting best practice
 
 ## Main Topics
 Each of these topics represents a key responsibility for a website maintainer.
-- [Reliability](./reliability/reliability.md)
-- [Security](./security/security.md)
 - [Performance](./performance/performance.md)
+- [Reliability](./reliability/reliability.md)
+- [Server Environment](./server-environment/server-environment.md)
+- [Security](./security/security.md)
 
 ## License
 This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License. 

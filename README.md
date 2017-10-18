@@ -4,13 +4,13 @@
 `0.0.1`
 
 ## Purpose
-This repository serves as a documentation around WordPress hosting best practices and considerations. It is intended for folks responsible for the infrastructure of a WordPress site or sites. For each topic, the documentation will provide an overview someone might need to know, as it relates to WordPress.
+This repository serves as a documentation around hosting WordPress best practices and considerations. It is intended for folks responsible for the infrastructure of a WordPress site or sites. For each topic, the documentation will provide an overview someone might need to know, as it relates to WordPress.
 
 ## Audience
-This documentation is for technical folks hosting WordPress for business critical needs (client sites, company sites, high traffic personal site, etc.). They may be newer to WordPress and/or hosting, such as starting a hosting business, but aren't totally new to technology in general and would be able to understand concepts easily but need a resource where those best practices are laid out. It is not oriented at end users who aren't comfortable with deeper technical topics.
+This documentation is for technical folks hosting WordPress. They may be newer to WordPress and/or hosting, such as starting a hosting business, but aren't totally new to technology in general and would be able to understand concepts easily but need a resource where those best practices are laid out. It is not oriented at end users who aren't comfortable with deeper technical topics.
 
 ## Main Topics
-Each of these topics represents a key responsibility for a website maintainer.
+Each of these topics represents a key responsibility for a WordPress hosts.
 - [Performance](./performance/performance.md)
 - [Reliability](./reliability/reliability.md)
 - [Server Environment](./server-environment/server-environment.md)

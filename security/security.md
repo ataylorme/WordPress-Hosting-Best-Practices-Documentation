@@ -1,7 +1,9 @@
 # Security
 The goal of the page is to inform users who manage a WordPress site about general security best practices both in terms of environment level items, such as file permissions, as well as application level items, such as setting up proper user roles, so they have a better foundation for security than setting up WordPress somewhere with no additional configuration.
 
-WordPress is extremely committed to providing a secure experience for WordPress site admnistrators and their users. More information about WordPress's official stance on security and a general discussion about WordPress's overall aims for security can be found on [WordPress.org's section about WordPress itself](https://wordpress.org/about/security/).
+**The most important thing to do for WordPress security is keeping WordPress itself and all installed plugins and themes up to date. It also is important to make sure that you are using themes and plugins that are actively receiving updates.**
+
+WordPress is extremely committed to providing a secure experience for WordPress site administrators and their users. More information about WordPress's official stance on security and a general discussion about WordPress's overall aims for security can be found on [WordPress.org's section about WordPress itself](https://wordpress.org/about/security/).
 
 The following sections of this guide will provide instructions on how to keep WordPress secure. This guide borrows heavily from the WordPress Codex's guide on [Hardening WordPress](https://codex.wordpress.org/Hardening_WordPress). Although both the WordPress Codex and this guide cover security, this guide should be viewed as the authoritative best practices document for security for WordPress.
 
@@ -13,9 +15,9 @@ Security is also about more than WordPress. It is also about making sure your ho
 
 ## Ban Multiple Login Attempts
 
-One of the most common kinds of attacks targeting Internet services is brute force login attacks. This attack is extremely simple to carry out thanks to the power of computers. In this attack, a malicious user tries to guess your WordPress website's admin username and password. The malicious user does not need to know anything about your WordPress website or your login information to do this attack. Using computers, you can make thousands of guesses per second. Maliciuos software developers have also written programs that do the guessing for you, and these programs use sophisticated tricks and techniques that can make strong-looking passwords really easy to guess.
+One of the most common kinds of attacks targeting Internet services is brute force login attacks. This attack is extremely simple to carry out thanks to the power of computers. In this attack, a malicious user tries to guess your WordPress website's admin username and password. The malicious user does not need to know anything about your WordPress website or your login information to do this attack. Using computers, you can make thousands of guesses per second. Malicious software developers have also written programs that do the guessing for you, and these programs use sophisticated tricks and techniques that can make strong-looking passwords really easy to guess.
 
-The best protection against this kind of attack is to use a truly strong password. The strongest passwords are relatively long and randomly generated. There are several services and programs called password managers that you can use to generate and save passwords. Using a password manager makes having strong passwords much easier. For most of these programs, you only need to know a single password to open the password manager itself. They also usually encrypt their password databases so others cannot access them; this is much more secure than storing your passwords in a notebook or a Word document, for example. WordPress also will generate a strong random password for you, but you have to store the password somewhere if you want to be able to log into the WordPress admin dashboard later.
+The best protection against this kind of attack is to use a truly strong password. Using a password manager makes having strong passwords much easier. If you would like to learn more about password managers, [Wikipedia has an article about password managers in general] (https://en.wikipedia.org/wiki/Password_manager). It also has a [list of password managers] (https://en.wikipedia.org/wiki/List_of_password_managers) if you would like to find one to use.
 
 There additional steps that can be taken to protect WordPress against multiple login attempts. These steps largely boil down to adding an additional layer of authentication and to limiting logins to the WordPress admin dashboard. Additional layers of authentication and limiting logins can be implemented at the server level or through WordPress plugins.
 
@@ -27,80 +29,21 @@ Some WordPress security guides recommend using unique usernames for WordPress ad
 ### Server Level
 
 #### Password Protect wp-login.php
-Adding a second password to wp-login.php requires all users to provide a password before being able to login into WordPress. This protects WordPress by adding a second username and password brute force attackers must guess before they can start guessing WordPress login information. Password protecting wp-login.php requires setting up a .htpasswd file. Your hosting provider may have tools that do this for you, especially if they use popular web panel software like cPanel or Plesk. The .htpasswd can be setup manually if you have access to the files on your hosting account. There are several tools, [such as this one](http://www.htaccesstools.com/htpasswd-generator/), on the Internet that will help you with generating a .htpasswd file. After you generate the file, you can put it in the same folder as your website or in a folder outside of your website's public folder. Once you have created the .htpasswd file, you have to tell the web server where to find the file. The configuration will be different depending on the web server you are using. Basic configuration examples for Apache and nginx, two of the most popular web servers, can be found below.
-
-**Please be careful when making these changes. Errors in .htaccess files or in nginx configuration can cause WordPress to not load properly or the web server to show a 500 Internal Error. It is recommended to make a copy of any files you are going to edit before you make any changes. If you do get errors after saving changes, undo the changes or restore the backup copy of the files that were changed.**
-
-##### Apache .htaccess code for password-protecting wp-login.php
-The following code goes in the .htaccess file located within the same folder as WordPress. The .htaccess file is a hidden file. You may have to enable showing hidden files in the application you use to access your website files.
-
-**Note that .htaccess code will be applied to any subfolders in the same folder as the .htaccess file. This means that WordPress websites located in subfolders of another WordPress website may be affected by this change.**
-
-```
-# Stop Apache from serving .ht* files
-<Files ~ "^\.ht">
-Order allow,deny
-Deny from all
-</Files>
-
-# Protect wp-login
-<Files wp-login.php>
-AuthUserFile ~/.htpasswd   #<----- Change this to the path to where you put the .htpasswd file
-AuthName "Private access"
-AuthType Basic
-require user mysecretuser  #<----- Change mysecretuser to be the username you used when generating the .htpasswd file
-</Files>
-```
-
-##### Nginx code for password-protecting wp-login.php
-The following code should be placed inside of the server block within nginx's configuration.
-
-```
-location /wp-login.php {
-    auth_basic "Administrator Login";
-    auth_basic_user_file .htpasswd;
-}
-```
+For individual WordPress websites experiencing ongoing and frequent brute force login attacks, adding a second password to wp-login.php using HTTP Basic Authentication can help protect the website while reducing the attack's impact on the hosting server. If you are hosting your own WordPress websites, your hosting provider may have tools that do this for you, especially if they use popular web panel software like cPanel or Plesk. This method is not really appropriate for WordPress hosts with large numbers of websites they are hosting. Other security methods, like ModSecurity rules or other web application firewalls, may be more appropriate for preventing this kind of attack on a larger scale.
 
 #### Limit access to wp-login.php by IP address
 
-If password-protecting wp-login.php is not a good fit, it is possible to restrict access to the Wordpress admin dashboard login to specific IP addresses. This can completely lockdown and prevent unauthorized logins to the WordPress admin dashboard, but this restriction can make accessing the WordPress admin dashboard less convenient for legitimate users.
+If password-protecting wp-login.php is not a good fit for an individual WordPress website, it is possible to restrict access to the Wordpress admin dashboard login to specific IP addresses. This can completely lockdown and prevent unauthorized logins to the WordPress admin dashboard, but this restriction can make accessing the WordPress admin dashboard less convenient for legitimate users. Like password protecting wp-login.php using HTTP Basic Authentication, this protection is usually not a good fit for a hosting company to apply across an entire platform or server. It is usually best applied individually to WordPress websites experiencing ongoing and frequent brute force attacks that cannot be easily addressed through other means.
 
 **Many Internet Service Providers change the IP addresses for their customers frequently. If your ISP changes your IP address, you would have to manually update the whitelist of authorized IP addresses before you could login to the WordPress admin dashboard.**
 
-The following sections show how to restrict access to wp-login.php with the Apache and nginx web servers.
-
-**Please be careful when making these changes. Errors in .htaccess files or in nginx configuration can cause WordPress to not load properly or the web server to show a 500 Internal Error. It is recommended to make a copy of any files you are going to edit before you make any changes. If you do get errors after saving changes, undo the changes or restore the backup copy of the files that were changed.**
-
-##### Apache .htaccess code for restricting access to wp-login.php by IP address
-The following code goes in the .htaccess file located within the same folder as WordPress. The .htaccess file is a hidden file. You may have to enable showing hidden files in the application you use to access your website files.
-
-**Note that .htaccess code will be applied to any subfolders in the same folder as the .htaccess file. This means that WordPress websites located in subfolders of another WordPress website may be affected by this change.**
-
-```
-<Files wp-login.php>
-order deny,allow
-allow from x.x.x.x
-deny from all
-</Files>
-```
-
-x.x.x.x should be replaced with your IP address. You can find your public-facing IP address by [searching Google for "my ip address"](https://www.google.com/search?q=my%20ip%20address). It is important to use your public-facing IP address, which may be different from your computer's local network IP address. The public-facing IP address is the address WordPress and the web server sees when you visit your website.
-
-##### Nginx code for restricting access to wp-login.php by IP address
-Add a location block inside of your server block with the following code.
-
-```
-error_page  403
-location /wp-login.php {
-  allow   x.x.x.x;
-  allow   x.x.x.x;
-  deny    all;
-}
-```
-
 ### ModSecurity and Multiple Login Attempts
-Your host may already have protections against brute force login attacks for WordPress. Many hosting companies deploy the popular ModSecurity web application firewall package on their servers. ModSecurity monitors the requests visitors to your WordPress website make and blocks requests that match certain rules about what is and what is not legitimate activity. Your hosting provider should be able to provide more information about whether or not they use ModSecurity and what protections they have enabled if they do.
+ModSecurity is a popular web application firewall for dynamically blocking malicious requests. ModSecurity monitors the requests visitors make for any websites and blocks requests that match certain rules about what is and what is not legitimate activity. If you purchased hosting from an existing hosting provider, your hosting provider probably already has ModSecurity configured, often with their own custom-tailored rules. In this case, contact your hosting provider for more information about how they are using ModSecurity to protect your WordPress websites.
+
+For hosting companies, ModSecurity is an extremely powerful tool for protecting servers. However, it is relatively complex and can be difficult to configure. Given that ModSecurity monitors all web traffic, changes to ModSecurity rules can easily result in legitimate web activity being blocked by ModSecurity. Caution is recommended when making any modifications to ModSecurity. Hosting providers looking to use ModSecurity or to change their configuration should research ModSecurity further or consult with ModSecurity experts.
+
+### Captchas
+Captchas are tests that help to prevent bots from being able to complete website forms, such as the WordPress admin dashboard login. A Captcha is usually a test that requires some level of human input before the form can be submitted. There are several plugins that can be used to add Captchas to WordPress forms and to the WordPress admin dashboard login page as well. These tools can also help protect against brute force login attacks while still providing a more convenient login experience for WordPress users.
 
 ### Plugins
 There are several plugins that will prevent brute force login attacks on WordPress with minimal configuration. [Plugins can be found in the WordPress plugin](https://wordpress.org/plugins/tags/brute-force/).

@@ -8,7 +8,7 @@ The goal of the page is to inform users who manage a WordPress site about genera
 ### Plugins
 
 ## File System
-WordPress has a very logical and efficient file system. File permissions and user rights are a not-to-miss chapter if you want your hosting to be fully security compliant. Please make sure all these permissions on the WordPRess-install are granted so the end user don't walk into closed doors.
+WordPress has a very logical and efficient file system. File permissions and user rights are a not-to-miss chapter if you want your hosting to be fully security compliant. Please make sure all these permissions are granted so the end user don't walk into closed doors.
 
 ### File Permissions
 

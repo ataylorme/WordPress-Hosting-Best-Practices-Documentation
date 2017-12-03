@@ -53,7 +53,25 @@ Op-code caching can make web servers use fewer resources when running WordPress;
 
 ## PHP
 
+PHP (PHP: Hypertext Preprocessor) is a popular programming language on the internet. PHP turns dynamic content, like that in WordPress, into HTML, CSS, and JavaScript that web browsers can read. WordPress is written in PHP. All of its core files and scripts are PHP scripts, and a server must have PHP in order for WordPress to be able to run.
+
+PHP is an interpreted language. WordPress and other programs written in PHP do not have to be compiled ahead of time before they can be run. This means the same PHP code can run on any platform that can run PHP. Interpreted languages do tend to have slower performance than compiled languages; however, much work has been done to improve PHP in this regard.
+
+PHP's configuration has a very large impact on how well WordPress will run and if WordPress can run at all. For example, many older versions of PHP are no longer compatible with WordPress. In addition, properly configuring PHP is critical for ensuring WordPress can properly function.
+
 ### Version
+
+The current major version of PHP is PHP 7. If possible, PHP 7 should be used to run WordPress. As of the writing of this document, PHP 7 is the only major version of PHP still receiving active development and support. The makers of PHP eventually retire versions of PHP as they continue to add new features to PHP. Sometimes the features that are added make new versions of PHP significantly different than older versions. It is all part of PHP growing as a programming language. The newer versions of PHP also have performance improvements and security patches that older versions of PHP do not have and likely will never receive.
+
+Servers running older versions of PHP should be upgraded to the newest version of PHP if possible. However, extreme care must be taken when upgrading the version of PHP. Older websites built to use older versions of PHP are usually also not readily or completely compatible with newer versions of PHP. If the newest version of WordPress is being used, there should not be any compatibility issues with WordPress; however, 3rd-party plugins or themes may not be compatible with the newest version of PHP. 
+
+**Always test your PHP website in a non-production environment if possible. Testing in a non-production environment allows you to find any issues you will have without causing your website to be unavailable or have errors when people visit your website.**
+
+Upgrading PHP can be a somewhat time-consuming process depending on the hosting server's configuration, and the upgrade also often cannot be easily reversed if issues are discovered after upgrading.
+
+**If you are uncomfortable with or do not know how to upgrade PHP, you should contact your hosting provider. Hosting providers can usually help with upgrading to a newer version of PHP.**
+
+If upgrading to PHP 7 is not immediately possible, upgrading to PHP 5.6 should be done as soon as possible. PHP 5.6 is the oldest version of PHP 5 that is still receiving security patches. Older versions of PHP are not having their bugs and vulnerabilities patched. They should be considered insecure and can make websites more vulnerable. A plan to upgrade to PHP 7 should still be developed. PHP 7 offers significant improvements in performance over PHP 5. It also is receiving active updates and security patches and will receive development for years to come. PHP 5.6's security patches end in 2018. More information about the support versions of PHP can always be found [on PHP's supported versions page](http://php.net/supported-versions.php)
 
 ### Configuration
 

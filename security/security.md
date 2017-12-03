@@ -135,3 +135,9 @@ The WordPress database is not stored in a file in your hosting account that can 
 **phpMyAdmin can be used to manage and make changes to your database in addition to backing up your database. Be careful not to accidentally edit your database through phpMyAdmin.**
 
 To backup a database through phpMyAdmin, select the database in phpMyAdmin by clicking on the name of the database in the tree-view on the left-hand side of the phpMyAdmin page. phpMyAdmin should reload and show the tables in the currently selected database. Next, click on "Export" from the menu on the top of the page. There should be a Quick option and a Custom option for exporting the database. The Quick option is usually good enough for a basic backup. If you choose the Custom option, select all tables in the database, select SQL from the Format drop-down menu, check "Add DROP TABLE", and click Go. The database will then be downloaded through your Internet browser.
+
+#### WordPress uses security keys
+
+The wp-config.php file uses security keys (AUTH_KEY, SECURE_AUTH_KEY, LOGGED_IN_KEY, and NONCE_KEY) to ensure better encryption of information stored in the user's cookies. A good security key should be long (60 characters or longer), random and complicated enough. Hosters should verify that the security keys are set up and that they at least contain alphabetic and numeric characters.
+
+**WordPress Security Key Generator https://api.wordpress.org/secret-key/1.1/salt/ can be used to change your security keys.**

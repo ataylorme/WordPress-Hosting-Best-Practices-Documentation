@@ -58,6 +58,7 @@ Two-factor authentication is useful because if someone obtains the password to y
 Two-factor authentication can make logging into services less convenient, since access to the second form of authentication (your smartphone, in the example with Google) is required to login. For critical services, though, two-factor authentication greatly improves the security of your accounts.
 
 ## File System
+WordPress has a very logical and efficient file system. File permissions and user rights are a not-to-miss chapter if you want your hosting to be fully security compliant. Please make sure all these permissions are granted so the end user don't walk into closed doors.
 
 The setup of your hosting account's file system can have a large impact on the security of WordPress. Setting proper file persmissions and ownership is extremely important for ensuring unauthorized users cannot access or modify WordPress's files.
 

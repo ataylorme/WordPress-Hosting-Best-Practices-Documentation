@@ -138,10 +138,17 @@ To backup a database through phpMyAdmin, select the database in phpMyAdmin by cl
 
 #### WordPress uses security keys
 
-The wp-config.php file uses security keys (AUTH_KEY, SECURE_AUTH_KEY, LOGGED_IN_KEY, and NONCE_KEY) to ensure better encryption of information stored in the user's cookies. A good security key should be long (60 characters or longer), random and complicated enough. Hosters should verify that the security keys are set up and that they at least contain alphabetic and numeric characters.
+The `wp-config.php` file uses security keys (`AUTH_KEY`, `SECURE_AUTH_KEY`, `LOGGED_IN_KEY`, and `NONCE_KEY`) to ensure better encryption of information stored in the user's cookies. As a best practice security keys should be 60 characters or longer, random and complicated, containing both alphabetic and numeric characters.
 
-**WordPress Security Key Generator https://api.wordpress.org/secret-key/1.1/salt/ can be used to change your security keys.**
+**[The WordPress Security Key Generator](https://api.wordpress.org/secret-key/1.1/salt/) should be used to generate security keys.**
 
 #### Database prefix
 
-WordPress database tables have the same names in all WordPress installations. When the standard wp_ prefix to the database tables' names is used, the whole WordPress database structure is not a secret. Hosters should verify that the prefix to the database tables' names is other than wp_. To secure an existing WordPress installation, turn on the maintenance mode, deactivate all plugins, change the prefix in the configuration file, change the prefix in the database, then re-activate all plugins, refresh the permalink structure, and finally turn off the maintenance mode.
+WordPress database tables have the same names in all WordPress installations. The standard `wp_` database table prefix can be targeted by malicious activity. Consider using a datbase table name prefix other than the default `wp_`. To change an existing WordPress installation follow these steps:
+* turn on the maintenance mode
+* deactivate all plugins
+* change the prefix in the `wp-config.php` configuration file
+* change the prefix in the database
+* re-activate all plugins
+* refresh the permalink structure
+* turn off the maintenance mode.

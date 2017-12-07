@@ -139,4 +139,4 @@ To backup a database through phpMyAdmin, select the database in phpMyAdmin by cl
 
 ### Security of the configuration file
 
-The wp-config.php file contains credentials for database and so on. After WordPress installation, the wp-config.php file can be executed. If, for some reason, processing of PHP files by the web server is turned off, hackers can access the content of the wp-config.php file. Hosters should verify that unauthorized access to the wp-config.php file is blocked.
+The `wp-config.php` file contains database credentials and other sensitive information. After installing WordPress, the `wp-config.php` file can be executed. If, for some reason, processing of PHP files by the web server is turned off, hackers can access the content of the wp-config.php file. As a precaution you should verify that unauthorized access to the `wp-config.php` file is blocked by disallowing web access to the file.

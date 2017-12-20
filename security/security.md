@@ -144,11 +144,4 @@ The `wp-config.php` file uses security keys (`AUTH_KEY`, `SECURE_AUTH_KEY`, `LOG
 
 #### Database prefix
 
-WordPress database tables have the same names in all WordPress installations. The standard `wp_` database table prefix can be targeted by malicious activity. Consider using a datbase table name prefix other than the default `wp_`. To change an existing WordPress installation follow these steps:
-* turn on the maintenance mode
-* deactivate all plugins
-* change the prefix in the `wp-config.php` configuration file
-* change the prefix in the database
-* re-activate all plugins
-* refresh the permalink structure
-* turn off the maintenance mode.
+WordPress database tables have the same names in all WordPress installations. The standard `wp_` database table prefix can be targeted by malicious activity. Consider using a database table name prefix other than the default `wp_` when setting up a new WordPress site.

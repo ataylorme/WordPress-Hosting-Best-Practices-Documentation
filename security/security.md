@@ -135,3 +135,8 @@ The WordPress database is not stored in a file in your hosting account that can 
 **phpMyAdmin can be used to manage and make changes to your database in addition to backing up your database. Be careful not to accidentally edit your database through phpMyAdmin.**
 
 To backup a database through phpMyAdmin, select the database in phpMyAdmin by clicking on the name of the database in the tree-view on the left-hand side of the phpMyAdmin page. phpMyAdmin should reload and show the tables in the currently selected database. Next, click on "Export" from the menu on the top of the page. There should be a Quick option and a Custom option for exporting the database. The Quick option is usually good enough for a basic backup. If you choose the Custom option, select all tables in the database, select SQL from the Format drop-down menu, check "Add DROP TABLE", and click Go. The database will then be downloaded through your Internet browser.
+
+
+### Security of the configuration file
+
+The `wp-config.php` file contains database credentials and other sensitive information. After installing WordPress, the `wp-config.php` file can be executed. If, for some reason, processing of PHP files by the web server is turned off, hackers can access the content of the wp-config.php file. As a precaution you should verify that unauthorized access to the `wp-config.php` file is blocked by disallowing web access to the file.

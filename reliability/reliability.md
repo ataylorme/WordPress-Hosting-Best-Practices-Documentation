@@ -19,17 +19,6 @@ A WordPress site is composed of three (3) main components:
 
 It's a good idea to make regular copies, or backups, of your WordPress site *and* its database.  This safety net ensures that you'll be able to restore your backups to get up and running again in very little time.
 
-It's best practice to store backups in a different location than your site itself so they're not lost if something happens to the server. Let's look at a few options for managing backups.
-
-### Manual Backups
-The most basic way to backup your site is to manually create copies of its database and files, and then download them. You can make a `.zip` archive for the files and a `.sql` export for the database. They can be downloaded directly to your local machine or stored somewhere safe, like in cloud storage. [Creating Manual WordPress Backups](https://codex.wordpress.org/WordPress_Backups#Backing_Up_Your_WordPress_Site)
-
-### Backup via Plugin
-There are many WordPress plugins that will create backups for you automatically if you are not comfortable doing so manually. Again, remember to download the backups from your server once they are created.
-
-### Backup Services
-There are also services that will take care of creating, downloading, and storing backup files for you. Most of these services have a cost but are typically reliable and easy to use.
-
 ## Monitoring
 Site monitoring systems and services can notify you when your site isn't working properly.  They can often correct any minor issues, or help you to do so, before they become major issues.
 

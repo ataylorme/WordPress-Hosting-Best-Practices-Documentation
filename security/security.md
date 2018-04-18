@@ -15,9 +15,9 @@ Security is also about more than WordPress. It is also about making sure your ho
 
 ## Throttling Multiple Login Attempts
 
-One of the most common kinds of attacks targeting Internet services is brute force login attacks. With this form of attack, a malicious user tries to guess a user's WordPress admin username and password. The attacker needs only the URL of a user site to perform an attack. Using computers, you can make thousands of guesses per second. Malicious software developers have also written programs that do the guessing for you, and these programs use sophisticated tricks and techniques that can make strong-looking passwords really easy to guess.
+One of the most common kinds of attacks targeting Internet services is brute force login attacks. With this form of attack, a malicious user tries to guess a user's WordPress admin username and password. The attacker needs only the URL of a user site to perform an attack. Software is readily available to perform these attacks using botnets, making increasingly complex passwords easier to find.
 
-The best protection against this kind of attack is to recommend or enforce default strong passwords for users.
+The best protection against this kind of attack is to set and recommend and/or enforce strong passwords for users.
 
 It is also recommended for hosts to throttle login attempts at the network and server level as possible. It's helpful to throttle both maximum logins per site over time, and maximum attempts per IP over time across server or infrastructure to mitigate bot password brute-force attacks. This can be done at the plugin level as well, but not without incurring the additional resource utilization caused during these attacks.
 
@@ -76,8 +76,11 @@ The default recommended file permissions for WordPress are 755 (-rwxr-xr-x) for 
 
 ### User Accounts
 WordPress websites should be run as non-privileged users. If possible, separate WordPress websites should be run as separate users in order to isolate WordPress websites from one another. In addition, the web server used to process PHP scripts and requests for WordPress websites should be configured to handle requests as a non-privileged user. The exact configuration of your users and web server will vary depending on your server environment and choice of web server and the installed web server modules.
-### Uploads vs. Core Files
-WordPress stores many assets and user uploaded files in a special uploads directory located in /wp-content/uploads within the WordPress website directory. The uploads directory must be web-accessible in order for user content and uploaded assets to be loaded by WordPress. The web server will also need to be able to write to the user's uploads folder for WordPress to be able to handle uploading user content.
+
+### Core and Upload Write Permissions
+For automatic security updates to function, PHP must be able to overwrite WordPress' core files. If you do not handle automated updates at the infrastructure level, this is the recommended practice.
+
+Additionally, WordPress stores assets and user uploaded files in a special uploads directory located in `/wp-content/uploads`, by default, within the WordPress root. The uploads directory must be web-accessible in order for user content and uploaded assets to be loaded by a browser. PHP will also need to be able to write to the user's uploads folder for WordPress to handle uploading user content.
 
 ## WordPress Users and Roles
 WordPress itself defines 5 default types of users (6 if WordPress Multisite is enabled). They are:
@@ -92,14 +95,15 @@ WordPress itself defines 5 default types of users (6 if WordPress Multisite is e
 When WordPress is first installed, an Administrator account is automatically setup.
 
 Plugins and themes can add additional types of users and capabilities to WordPress beyond the defaults. These additional options are commonly used by plugins and themes to manage the functionality they add to WordPress.
+
 ## HTTPS and SSL
 > Link to this guide with more info about implementing HTTPS for WordPress? https://make.wordpress.org/support/user-manual/web-publishing/https-for-wordpress/
 
-WordPress is fully compatible with HTTPS when an SSL certificate is installed and available for the web server to use. Support for HTTPS is strongly recommended to help maintain the security of website visitors as they interact with hosted WordPress websites.
+WordPress is fully compatible with HTTPS when an SSL certificate is installed and available for the web server to use. Support for HTTPS is strongly recommended to help maintain the security of both WordPress logins and site visitors.
 
 ### Security of the configuration file
 
-The `wp-config.php` file contains database credentials and other sensitive information. After installing WordPress, the `wp-config.php` file can be executed. If, for some reason, processing of PHP files by the web server is turned off, hackers can access the content of the wp-config.php file. As a precaution you should verify that unauthorized access to the `wp-config.php` file is blocked by disallowing web access to the file.
+The `wp-config.php` file contains database credentials and other sensitive information. After installing WordPress, the `wp-config.php` file can be executed. If, for some reason, processing of PHP files by the web server is turned off, attackers can access the content of the wp-config.php file. As a precaution you should verify that unauthorized access to the `wp-config.php` file is blocked by disallowing web access to the file.
 
 ## Caching Security
 While caching can significantly improve the performance of WordPress websites, caching can expose WordPress websites to new vulnerabilities if the caching providers are not configured correctly. Some common vulnerabilities include but are not limited to websites accessing the cached data for other websites or caching applications serving the wrong cached data or files. Each kind of caching application usually has security settings and configuration to provide a safe environment for enjoying the performance benefits of caching.
@@ -127,17 +131,26 @@ The default value for the setting is `''`, which means there are no restrictions
 
 ### Object Caching Security
 There are several solutions for providing database object caching for WordPress. Each comes with its own configuration requirements for providing a secure environment while using database object caching.
+
 #### Redis
 Redis is a lightweight, high-performance key-value database server commonly used to cache the results from WordPress database queries. In its default configuration, Redis uses a single database and does not require a username and password to access the database. Redis should also only be accessible from authorized network hosts.
+
 ##### Redis databases
 Redis provides 16 databases, number 0 to 15 by default. Redis clients should be configured to use different databases instead of the default database (number 0). Redis can be configured to have additional databases, but that it outside the scope of this document.
+
 ##### Redis user credentials
 If Redis is going to be used for database object caching, the Redis server should be configured to require access credentials.
+
 ##### Redis network hosts
 The Redis server in its default configuration listens on port 6379. The port can be changed in Redis's configuration, but whatever port is used should be protected by a firewall to prevent unauthorized access.
+
 ##### Redis cache key salt
 If using Redis for database object caching, using a unique Redis cache key salt will help prevent cache collisions -- when two websites try to cache content using the same key. Cache collisions can result in websites accessing the cached data for other websites and can cause other undesirable and unexpected behaviors. The Redis cache key salt is usually configured through the Redis caching plugin or Redis client used to enable Redis database object caching in WordPress websites.
+
 #### Memcached
-Memcached is a memory object caching solution commonly used to provide database object caching for WordPress. 
+Memcached is a memory object caching solution commonly used to provide database object caching for WordPress.
+
 ##### Memcrashed
 One of the most important configuration concerns for memcached is preventing memcached from being accessed by the public internet. In 2018, insecure memcached servers were used in widespread DDoS amplification attacks using an exploit dubbed Memcrashed. The exploit used memcached servers with open access from the public internet to send large amounts of traffic to DDoS targets in response to spoofed requests. Putting memcached servers behind firewalls is one of the most important parts of using memcached securely for WordPress database object caching.
+
+### WordPress Automatic Updates

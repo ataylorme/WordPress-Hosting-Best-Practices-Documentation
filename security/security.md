@@ -139,3 +139,5 @@ If using Redis for database object caching, using a unique Redis cache key salt 
 Memcached is a memory object caching solution commonly used to provide database object caching for WordPress. One of the most important configuration concerns for memcached is preventing memcached from being accessed by the public internet. Putting memcached servers behind a firewall is one of the most important parts of using memcached securely for WordPress database object caching.
 
 ### WordPress Automatic Updates
+WordPress has the ability to automatically apply security updates. This should be enabled in almost all cases. The exception is if files are not writeable outside of `wp-content/uploads` for security reasons **and** an alternative, preferably automatic, update process is made available. See [Configuring Automatic Background Updates
+](https://codex.wordpress.org/Configuring_Automatic_Background_Updates) for details on automatic update configuration.

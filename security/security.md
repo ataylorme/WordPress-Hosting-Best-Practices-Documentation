@@ -15,20 +15,17 @@ Security is also about more than WordPress. It is also about making sure your ho
 
 ## Throttling Multiple Login Attempts
 
-One of the most common kinds of attacks targeting Internet services is brute force login attacks. With this form of attack, a malicious user tries to guess a user's WordPress admin username and password. The attacker needs only the URL of a user site to perform an attack. Software is readily available to perform these attacks using botnets, making increasingly complex passwords easier to find.
+One of the most common kinds of attacks targeting internet services is brute force login attacks. With this form of attack, a malicious party tries to guess WordPress usernames and passwords. The attacker needs only the URL of a user site to perform an attack. Software is readily available to perform these attacks using botnets, making increasingly complex passwords easier to find.
 
-The best protection against this kind of attack is to set and recommend and/or enforce strong passwords for users.
+The best protection against this kind of attack is to set and recommend and/or enforce strong passwords for WordPress users.
 
-It is also recommended for hosts to throttle login attempts at the network and server level as possible. It's helpful to throttle both maximum logins per site over time, and maximum attempts per IP over time across server or infrastructure to mitigate bot password brute-force attacks. This can be done at the plugin level as well, but not without incurring the additional resource utilization caused during these attacks.
+It is also recommended for hosts to throttle login attempts at the network and server level when possible. It's helpful to throttle both maximum logins per site over time, and maximum attempts per IP over time across server or infrastructure to mitigate bot password brute-force attacks. This can be done at the plugin level as well, but not without incurring the additional resource utilization caused during these attacks.
 
 ### A Note About Usernames
 Some WordPress security guides recommend using unique usernames for WordPress administrator accounts. While well-intentioned, WordPress's REST API allows anyone to view many of the users for your WordPress website. You can see this for yourself by sending a request to the endpoint at  /wp-json/wp/v2/users.
 
 > The WordPress project doesn’t consider usernames or user ids to be private or secure information. A username is part of your online identity. It is meant to identify, not verify, who you are saying you are. Verification is the job of the password.
 - Quoted from the [WordPress Security Handbook](https://make.wordpress.org/core/handbook/testing/reporting-security-vulnerabilities/#why-are-disclosures-of-usernames-or-user-ids-not-a-security-issue)
-
-### Removed user-level suggestions for login attempt prevention and placed them here for now:
-https://hackmd.io/SIr_m9ZjTOaaQHEVCVyn5w
 
 ### Two-Factor Authentication
 Two-factor authentication, also know as 2FA or two-step authentication, is a login scheme that uses a separate, second form of authentication when a user attempts to login to a service with two-factor authentication enabled. The exact two-factor authentication setup varies from service to service, but it usually involves entering in a code or interacting with an application on a smartphone when attempting to login to a service. WordPress does not have two-factor authentication by default; however, [there are several plugins that provide two-factor authentication for self-hosted WordPress websites](http://wordpress.org/plugins/tags/two-factor-authentication).
@@ -41,9 +38,7 @@ The setup of your hosting account's file system can have a large impact on the s
 
 **This section on file permissions focuses entirely on file permissions on Linux servers. If you are using a Windows server, please consult with your hosting provider or a Windows server administrator for help setting the proper permissions.**
 
-> Is there somewhere we can link out to for a basic description of permissions for folks that need it?
-
-Linux file permissions consist primarily of three components -- the permissions the owner of the file or folder has, the permissions members of the group that owns the file or folder have, and the permissions that anyone else has for accessing or modifying the file and folder. The three permission components are usually represented using three numbers in order of the owner's permission level, the group's permission level, and everyone's permission level. _There is technically a fourth component, but that is beyond what we need to know to secure WordPress. It will not be discussed here._
+Linux [file permissions](https://en.wikipedia.org/wiki/File_system_permissions) consist primarily of three components -- the permissions the owner of the file or folder has, the permissions members of the group that owns the file or folder have, and the permissions that anyone else has for accessing or modifying the file and folder. The three permission components are usually represented using three numbers in order of the owner's permission level, the group's permission level, and everyone's permission level. _There is technically a fourth component, but that is beyond what we need to know to secure WordPress. It will not be discussed here._
 
 There are three kinds of access each for the user, the group, and everyone else. They are read access, write access, and execute access. Read access lets you read the contents of the file or the directory. Write access lets you modify the file or the directory. And execute access lets you run the file like a program or a script.
 
@@ -66,16 +61,11 @@ Some programs will represent the different kinds of access using letters instead
 
 #### Recommended Default Linux File Permissions
 
-> These permissions are going to be different depending on server setup. We should probably suggest that folks set up installs with the minimum permissions necessary for the install to function, with the possible exception of updating WordPress core, depending on infrastructure.
+File permissions are going to be different based on needs and server setup. Keep file permissions as restricted as possible, avoiding giving permissions that are not needed. Keep in mind WordPress needs the ability to write to it's own files for updates, including automatic security updates.
 
-> The file permission recommendations below come from the Codex: https://codex.wordpress.org/Hardening_WordPress#File_Permissions (but the Codex is currently under review)
-
-> @mike suggested being less specific in which file permissions should be used.
-
-The default recommended file permissions for WordPress are 755 (-rwxr-xr-x) for folders and 644 (-rw-r--r--) for files. These permissions will ensure that WordPress can function properly while protecting WordPress from having its files modified by malicious or unauthorized users.
 
 ### User Accounts
-WordPress websites should be run as non-privileged users. If possible, separate WordPress websites should be run as separate users in order to isolate WordPress websites from one another. In addition, the web server used to process PHP scripts and requests for WordPress websites should be configured to handle requests as a non-privileged user. The exact configuration of your users and web server will vary depending on your server environment and choice of web server and the installed web server modules.
+WordPress websites should be run as non-privileged users. If possible, separate WordPress websites should be run as separate users in order to isolate WordPress websites from one another. In addition, the web server used to process PHP scripts and requests for WordPress websites should be configured to handle requests as a non-privileged user. The exact configuration of your users and web server will vary depending on your server environment, choice of web server, and the installed web server modules.
 
 ### Core and Upload Write Permissions
 For automatic security updates to function, PHP must be able to overwrite WordPress' core files. If you do not handle automated updates at the infrastructure level, this is the recommended practice.
@@ -85,25 +75,23 @@ Additionally, WordPress stores assets and user uploaded files in a special uploa
 ## WordPress Users and Roles
 WordPress itself defines 5 default types of users (6 if WordPress Multisite is enabled). They are:
 
+* Super Administrator (If WordPress Multisite is enabled) - a super user with access to the special WordPress Multisite administration features and all other normal administration features.
 * Administrator (slug: 'administrator') - a super user for the individual WordPress website with access to all of the administration features in the website.
 * Editor (slug: 'editor') - a user who can publish posts and manage the posts of other users.
 * Author (slug: 'author') - a user who can publish posts and manage the user's own posts.
 * Contributor (slug: 'contributor') - a user who can write and manage the user's own posts but cannot publish them.
 * Subscriber (slug: 'subscriber') - a user who can manage the user's own profile only.
-* Super Administrator (If WordPress Multisite is enabled) - a super user with access to the special WordPress Multisite administration features and all other normal administration features.
+
+Super Administrators, Administrators, and Editors are all considered "trusted" users, meaning they have capabilities that could be abused to damage or compromise a WordPress site.
 
 When WordPress is first installed, an Administrator account is automatically setup.
 
-Plugins and themes can add additional types of users and capabilities to WordPress beyond the defaults. These additional options are commonly used by plugins and themes to manage the functionality they add to WordPress.
+Plugins and themes can modify existing, as well as add additional types of, users and capabilities to WordPress beyond the defaults. These additional options are commonly used by plugins and themes to manage the functionality they add to WordPress.
 
 ## HTTPS and SSL
 > Link to this guide with more info about implementing HTTPS for WordPress? https://make.wordpress.org/support/user-manual/web-publishing/https-for-wordpress/
 
 WordPress is fully compatible with HTTPS when an SSL certificate is installed and available for the web server to use. Support for HTTPS is strongly recommended to help maintain the security of both WordPress logins and site visitors.
-
-### Security of the configuration file
-
-The `wp-config.php` file contains database credentials and other sensitive information. After installing WordPress, the `wp-config.php` file can be executed. If, for some reason, processing of PHP files by the web server is turned off, attackers can access the content of the wp-config.php file. As a precaution you should verify that unauthorized access to the `wp-config.php` file is blocked by disallowing web access to the file.
 
 ## Caching Security
 While caching can significantly improve the performance of WordPress websites, caching can expose WordPress websites to new vulnerabilities if the caching providers are not configured correctly. Some common vulnerabilities include but are not limited to websites accessing the cached data for other websites or caching applications serving the wrong cached data or files. Each kind of caching application usually has security settings and configuration to provide a safe environment for enjoying the performance benefits of caching.
@@ -148,9 +136,6 @@ The Redis server in its default configuration listens on port 6379. The port can
 If using Redis for database object caching, using a unique Redis cache key salt will help prevent cache collisions -- when two websites try to cache content using the same key. Cache collisions can result in websites accessing the cached data for other websites and can cause other undesirable and unexpected behaviors. The Redis cache key salt is usually configured through the Redis caching plugin or Redis client used to enable Redis database object caching in WordPress websites.
 
 #### Memcached
-Memcached is a memory object caching solution commonly used to provide database object caching for WordPress.
-
-##### Memcrashed
-One of the most important configuration concerns for memcached is preventing memcached from being accessed by the public internet. In 2018, insecure memcached servers were used in widespread DDoS amplification attacks using an exploit dubbed Memcrashed. The exploit used memcached servers with open access from the public internet to send large amounts of traffic to DDoS targets in response to spoofed requests. Putting memcached servers behind firewalls is one of the most important parts of using memcached securely for WordPress database object caching.
+Memcached is a memory object caching solution commonly used to provide database object caching for WordPress. One of the most important configuration concerns for memcached is preventing memcached from being accessed by the public internet. Putting memcached servers behind a firewall is one of the most important parts of using memcached securely for WordPress database object caching.
 
 ### WordPress Automatic Updates

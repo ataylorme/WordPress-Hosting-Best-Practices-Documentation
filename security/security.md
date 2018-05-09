@@ -1,71 +1,44 @@
 # Security
 The goal of the page is to inform users who manage a WordPress site about general security best practices both in terms of environment level items, such as file permissions, as well as application level items, such as setting up proper user roles, so they have a better foundation for security than setting up WordPress somewhere with no additional configuration.
 
-**The most important thing to do for WordPress security is keeping WordPress itself and all installed plugins and themes up to date. It also is important to make sure that you are using themes and plugins that are actively receiving updates.**
+**The most important thing to do for WordPress security is to keep WordPress itself and all installed plugins and themes up to date. It is also encouraged for users to choose themes and plugins that are actively receiving updates.**
 
-WordPress is extremely committed to providing a secure experience for WordPress site administrators and their users. More information about WordPress's official stance on security and a general discussion about WordPress's overall aims for security can be found on [WordPress.org's section about WordPress itself](https://wordpress.org/about/security/).
+WordPress is committed to providing a secure experience for users. Information about WordPress's official stance on security and a general discussion about WordPress's overall aims for security can be found on [WordPress.org's Security page](https://wordpress.org/about/security/).
 
-The following sections of this guide will provide instructions on how to keep WordPress secure. This guide borrows heavily from the WordPress Codex's guide on [Hardening WordPress](https://codex.wordpress.org/Hardening_WordPress). Although both the WordPress Codex and this guide cover security, this guide should be viewed as the authoritative best practices document for security for WordPress.
+This guide borrows heavily from the WordPress Codex's guide on [Hardening WordPress](https://codex.wordpress.org/Hardening_WordPress). Since it's publicly editible, advice in the codex should be viewed with caution.
 
-Hosting providers will usually take measures to provide varying degrees of secure environments by default; however, security for your WordPress website is ultimately your responsibility. Keeping any system, not just WordPress, secure is a continuous work. Good security requires careful planning and periodic maintenance.
+Keeping any system, not just WordPress, secure is continuous work. Good security requires careful planning, monitoring, and periodic maintenance.
 
-Security largely consists of reducing risk and planning for recovery. Most security plans focus on minimizing the risk of unauthorized access only, but risk can never be successfully reduced to zero. As long as there is some risk, you must plan for recovery so that if something were to happen your website is not completely lost and your website can be quickly restored to normal operation.
+Security largely consists of reducing risk and planning for recovery. Most security plans focus on minimizing the risk of unauthorized access only, but risk can never be successfully reduced to zero. As long as there is some risk, you must plan for recovery so that if something were to happen, user sites are not completely lost and can be quickly restored to normal operation.
 
-Security is also about more than WordPress. It is also about making sure your hosting environment is secure and your personal online practices and behaviors keep you safe. Good security depends on the technology in use and the people using the technology. Obsolete or out-of-date technology can have bugs or vulnerabilities that can put your WordPress website at risk. People's bad online practices can also put your WordPress website as risk. It is important to make sure that not only do you keep the technology you use up-to-date and maintained but also that you are being safe when using the Internet and when using your WordPress website or hosting service.
+Security is also about more than WordPress. It is also about making sure your hosting environment is secure and your personal online practices and behaviors keep you safe. Good security depends on the technology in use and the people using the technology. Obsolete or out-of-date technology can have bugs or vulnerabilities that can put your WordPress website at risk. People's bad online practices can also put your WordPress website as risk. It is important to make sure that not only do you keep the technology you use up-to-date and maintained but also that employees are using security best practices when using the Internet and when interacting with your hosting platform or customer WordPress sites.
 
-## Ban Multiple Login Attempts
+## Throttling Multiple Login Attempts
 
-One of the most common kinds of attacks targeting Internet services is brute force login attacks. This attack is extremely simple to carry out thanks to the power of computers. In this attack, a malicious user tries to guess your WordPress website's admin username and password. The malicious user does not need to know anything about your WordPress website or your login information to do this attack. Using computers, you can make thousands of guesses per second. Malicious software developers have also written programs that do the guessing for you, and these programs use sophisticated tricks and techniques that can make strong-looking passwords really easy to guess.
+One of the most common kinds of attacks targeting internet services is brute force login attacks. With this form of attack, a malicious party tries to guess WordPress usernames and passwords. The attacker needs only the URL of a user site to perform an attack. Software is readily available to perform these attacks using botnets, making increasingly complex passwords easier to find.
 
-The best protection against this kind of attack is to use a truly strong password. Using a password manager makes having strong passwords much easier. If you would like to learn more about password managers, [Wikipedia has an article about password managers in general] (https://en.wikipedia.org/wiki/Password_manager). It also has a [list of password managers] (https://en.wikipedia.org/wiki/List_of_password_managers) if you would like to find one to use.
+The best protection against this kind of attack is to set and recommend and/or enforce strong passwords for WordPress users.
 
-There additional steps that can be taken to protect WordPress against multiple login attempts. These steps largely boil down to adding an additional layer of authentication and to limiting logins to the WordPress admin dashboard. Additional layers of authentication and limiting logins can be implemented at the server level or through WordPress plugins.
+It is also recommended for hosts to throttle login attempts at the network and server level when possible. It's helpful to throttle both maximum logins per site over time, and maximum attempts per IP over time across server or infrastructure to mitigate bot password brute-force attacks. This can be done at the plugin level as well, but not without incurring the additional resource utilization caused during these attacks.
 
-Some of the following recommendations have been borrowed from [the WordPress Codex's guide on Brute Force Attacks](https://codex.wordpress.org/Hardening_WordPress).
+### A Note About Usernames
+Some WordPress security guides recommend using unique usernames for WordPress administrator accounts. While well-intentioned, WordPress's REST API allows anyone to view many of the users for your WordPress website. You can see this for yourself by sending a request to the endpoint at  /wp-json/wp/v2/users.
 
-### Notes About Usernames
-Some WordPress security guides recommend using unique usernames for WordPress administrator accounts. While well-intentioned, WordPress's REST API allows anyone to view many of the users for your WordPress website. You can see this for yourself by putting /wp-json/wp/v2/users on the end of your WordPress website's URL. The output will be formatted for programs to use, but it should still be somewhat readable.
-
-### Server Level
-
-#### Password Protect wp-login.php
-For individual WordPress websites experiencing ongoing and frequent brute force login attacks, adding a second password to wp-login.php using HTTP Basic Authentication can help protect the website while reducing the attack's impact on the hosting server. If you are hosting your own WordPress websites, your hosting provider may have tools that do this for you, especially if they use popular web panel software like cPanel or Plesk. This method is not really appropriate for WordPress hosts with large numbers of websites they are hosting. Other security methods, like ModSecurity rules or other web application firewalls, may be more appropriate for preventing this kind of attack on a larger scale.
-
-#### Limit access to wp-login.php by IP address
-
-If password-protecting wp-login.php is not a good fit for an individual WordPress website, it is possible to restrict access to the Wordpress admin dashboard login to specific IP addresses. This can completely lockdown and prevent unauthorized logins to the WordPress admin dashboard, but this restriction can make accessing the WordPress admin dashboard less convenient for legitimate users. Like password protecting wp-login.php using HTTP Basic Authentication, this protection is usually not a good fit for a hosting company to apply across an entire platform or server. It is usually best applied individually to WordPress websites experiencing ongoing and frequent brute force attacks that cannot be easily addressed through other means.
-
-**Many Internet Service Providers change the IP addresses for their customers frequently. If your ISP changes your IP address, you would have to manually update the whitelist of authorized IP addresses before you could login to the WordPress admin dashboard.**
-
-### ModSecurity and Multiple Login Attempts
-ModSecurity is a popular web application firewall for dynamically blocking malicious requests. ModSecurity monitors the requests visitors make for any websites and blocks requests that match certain rules about what is and what is not legitimate activity. If you purchased hosting from an existing hosting provider, your hosting provider probably already has ModSecurity configured, often with their own custom-tailored rules. In this case, contact your hosting provider for more information about how they are using ModSecurity to protect your WordPress websites.
-
-For hosting companies, ModSecurity is an extremely powerful tool for protecting servers. However, it is relatively complex and can be difficult to configure. Given that ModSecurity monitors all web traffic, changes to ModSecurity rules can easily result in legitimate web activity being blocked by ModSecurity. Caution is recommended when making any modifications to ModSecurity. Hosting providers looking to use ModSecurity or to change their configuration should research ModSecurity further or consult with ModSecurity experts.
-
-### Captchas
-Captchas are tests that help to prevent bots from being able to complete website forms, such as the WordPress admin dashboard login. A Captcha is usually a test that requires some level of human input before the form can be submitted. There are several plugins that can be used to add Captchas to WordPress forms and to the WordPress admin dashboard login page as well. These tools can also help protect against brute force login attacks while still providing a more convenient login experience for WordPress users.
-
-### Plugins
-There are several plugins that will prevent brute force login attacks on WordPress with minimal configuration. [Plugins can be found in the WordPress plugin](https://wordpress.org/plugins/tags/brute-force/).
-
-**You should review a plugin before installing it to make sure it is actively maintained by its developer and is up to date with the current version fo WordPress. You should also understand the changes the plugin will make to WordPress when you install it.**
+> The WordPress project doesn’t consider usernames or user ids to be private or secure information. A username is part of your online identity. It is meant to identify, not verify, who you are saying you are. Verification is the job of the password.
+- Quoted from the [WordPress Security Handbook](https://make.wordpress.org/core/handbook/testing/reporting-security-vulnerabilities/#why-are-disclosures-of-usernames-or-user-ids-not-a-security-issue)
 
 ### Two-Factor Authentication
 Two-factor authentication, also know as 2FA or two-step authentication, is a login scheme that uses a separate, second form of authentication when a user attempts to login to a service with two-factor authentication enabled. The exact two-factor authentication setup varies from service to service, but it usually involves entering in a code or interacting with an application on a smartphone when attempting to login to a service. WordPress does not have two-factor authentication by default; however, [there are several plugins that provide two-factor authentication for self-hosted WordPress websites](http://wordpress.org/plugins/tags/two-factor-authentication).
 
-Two-factor authentication is useful because if someone obtains the password to your account, they still cannot login without the second authentication form. Google, for example, has two-factor authentication for user accounts. When two-factor authentication is enabled, Google requires you to enter in a single-use, unique code sent to your smartphone or makes you interact with your smartphone after you attempt to login to your Google account on a device or computer you have not previously used to login. If someone somehow got your Google account's password, the unauthorized user could not access your account because the unauthorized user could not provide the code or do the necessary interactions since those things are tied to your smartphone. You also are immediately notified when someone is accessing your Google account because you would receive the single-use, unique code or the prompt to interact with your smartphone for the login.
-
-Two-factor authentication can make logging into services less convenient, since access to the second form of authentication (your smartphone, in the example with Google) is required to login. For critical services, though, two-factor authentication greatly improves the security of your accounts.
-
 ## File System
 
-The setup of your hosting account's file system can have a large impact on the security of WordPress. Setting proper file persmissions and ownership is extremely important for ensuring unauthorized users cannot access or modify WordPress's files.
+The setup of your hosting account's file system can have a large impact on the security of WordPress. Setting proper file persmissions and ownership is important for ensuring unauthorized users cannot access or modify WordPress's files.
 
 ### File Permissions
 
 **This section on file permissions focuses entirely on file permissions on Linux servers. If you are using a Windows server, please consult with your hosting provider or a Windows server administrator for help setting the proper permissions.**
 
-Linux file permissions consist primarily of three components -- the permissions the owner of the file or folder has, the permissions members of the group that owns the file or folder have, and the permissions that anyone else has for accessing or modifying the file and folder. The three permission components are usually represented using three numbers in order of the owner's permission level, the group's permission level, and everyone's permission level. _There is technically a fourth component, but that is beyond what we need to know to secure WordPress. It will not be discussed here._
+Linux [file permissions](https://en.wikipedia.org/wiki/File_system_permissions) consist primarily of three components -- the permissions the owner of the file or folder has, the permissions members of the group that owns the file or folder have, and the permissions that anyone else has for accessing or modifying the file and folder. The three permission components are usually represented using three numbers in order of the owner's permission level, the group's permission level, and everyone's permission level. _There is technically a fourth component, but that is beyond what we need to know to secure WordPress. It will not be discussed here._
 
 There are three kinds of access each for the user, the group, and everyone else. They are read access, write access, and execute access. Read access lets you read the contents of the file or the directory. Write access lets you modify the file or the directory. And execute access lets you run the file like a program or a script.
 
@@ -86,57 +59,85 @@ Some programs will represent the different kinds of access using letters instead
 |    -rw-r--r--    |       644       | read & write for user, only read for group and everyone else                                 |
 |    -rwxrwxrwx    |       777       | read, write, and execute for user, group, and everyone else **Do not use. Security Risk.**   |
 
-#### Recommend Default Linux File Permissions
+#### Recommended Default Linux File Permissions
 
-The default recommended file permissions for WordPress are 755 (-rwxr-xr-x) for folders and 644 (-rw-r--r--) for files. These permissions will ensure that WordPress can function properly while protecting WordPress from having its files modified by malicious or unauthorized users.
+File permissions are going to be different based on needs and server setup. Keep file permissions as restricted as possible, avoiding giving permissions that are not needed. Keep in mind WordPress needs the ability to write to it's own files for updates, including automatic security updates.
+
 
 ### User Accounts
+WordPress websites should be run as non-privileged users. If possible, separate WordPress websites should be run as separate users in order to isolate WordPress websites from one another. In addition, the web server used to process PHP scripts and requests for WordPress websites should be configured to handle requests as a non-privileged user. The exact configuration of your users and web server will vary depending on your server environment, choice of web server, and the installed web server modules.
 
-### Uploads vs. Core Files
+### Core and Upload Write Permissions
+For automatic security updates to function, PHP must be able to overwrite WordPress' core files. If you do not handle automated updates at the infrastructure level, this is the recommended practice.
+
+Additionally, WordPress stores assets and user uploaded files in a special uploads directory located in `/wp-content/uploads`, by default, within the WordPress root. The uploads directory must be web-accessible in order for user content and uploaded assets to be loaded by a browser. PHP will also need to be able to write to the user's uploads folder for WordPress to handle uploading user content.
 
 ## WordPress Users and Roles
+WordPress itself defines 5 default types of users (6 if WordPress Multisite is enabled). They are:
 
-## Backing Up WordPress
-WordPress has two major components -- the website files and the WordPress database. Although WordPress website files are required for WordPress to function at all, your personal WordPress website data is stored inside of the WordPress database. Losing the files for WordPress can cause your website to be down for an extended period of time; however, losing your WordPress database means your website is lost forever if you do not have a backup of the database or can somehow restore the database.
+* Super Administrator (If WordPress Multisite is enabled) - a super user with access to the special WordPress Multisite administration features and all other normal administration features.
+* Administrator (slug: 'administrator') - a super user for the individual WordPress website with access to all of the administration features in the website.
+* Editor (slug: 'editor') - a user who can publish posts and manage the posts of other users.
+* Author (slug: 'author') - a user who can publish posts and manage the user's own posts.
+* Contributor (slug: 'contributor') - a user who can write and manage the user's own posts but cannot publish them.
+* Subscriber (slug: 'subscriber') - a user who can manage the user's own profile only.
 
-**Having a plan for backing up WordPress is extremely important. It is possibly more important than keeping WordPress secure in the first place. Even though your hosting provider may keep automatic backups, it is best to have multiple different backups from different time periods stored in different places. Ultimately, you are responsible for how well you backup your WordPress website.**
+Super Administrators, Administrators, and Editors are all considered "trusted" users, meaning they have capabilities that could be abused to damage or compromise a WordPress site.
 
-### Backups and Hacked Websites
-Backups are an extremely important part of recovering after a website has been attacked and altered by a malicious user. **Restoring from a clean backup predating the time a hack occurs is the only way to guarantee that there are no remaining malicious files and that there are no leftover changes to good files that could enable further attacks.**
+When WordPress is first installed, an Administrator account is automatically setup.
 
-### WordPress Backup Plugins
-There are several plugins for backing up WordPress files and databases. Backup plugins can let you make convenient, full backups through the WordPress admin dashboard. Some support automatic backups. [WordPress backup plugins can be easily found by searching the plugin directory](https://wordpress.org/plugins/search.php?q=backup). Most plugins allow you to manually create backups that you can then download to your local computer.
+Plugins and themes can modify existing, as well as add additional types of, users and capabilities to WordPress beyond the defaults. These additional options are commonly used by plugins and themes to manage the functionality they add to WordPress.
 
-#### Cautions About Automatic Backups
-Many WordPress backup plugins provide automatic backups. Automating backups can make keeping a recent backup of WordPress extremely convenient; however, if you use a plugin that provides automatic backups of WordPress, you must take some extra steps to keep yourself safe.
+## HTTPS and SSL
+> Link to this guide with more info about implementing HTTPS for WordPress? https://make.wordpress.org/support/user-manual/web-publishing/https-for-wordpress/
 
-Automatic backups can easily fill all of the disk space on your hosting account or server if old backups are not automatically deleted after a certain period of time.
+WordPress is fully compatible with HTTPS when an SSL certificate is installed and available for the web server to use. Support for HTTPS is strongly recommended to help maintain the security of both WordPress logins and site visitors.
 
-It is also possible to have automatic backups create bad backups when, for example, some change or hack has happened to a WordPress website that goes undetected for long enough for the automatic backups to run. Depending on how long it takes to identify that a hack has occurred or there is some problem with WordPress, the automatic backup plugin may have enough time to overwrite any good backups that had been made before the hack or problem occurred.
+## Caching Security
+While caching can significantly improve the performance of WordPress websites, caching can expose WordPress websites to new vulnerabilities if the caching providers are not configured correctly. Some common vulnerabilities include but are not limited to websites accessing the cached data for other websites or caching applications serving the wrong cached data or files. Each kind of caching application usually has security settings and configuration to provide a safe environment for enjoying the performance benefits of caching.
 
-Automatic backups can also push your hosting account or server's disk space beyond the limits your hosting provider has for automatically backing up your hosting account or server on their system, if they offer automated backups.
+### OpCache Security
+PHP opcode caching can significantly improve the performance of PHP processing for WordPress websites, as outlined in the Performance section of the WordPress Hosting Handbook. However, when improperly configured PHP opcode caching can enable users to access other users' PHP files without authorization. There are important PHP configuration options for opcode caching that mitigate vulnerabilities such as accessing files without authorization.
 
-Some hosting providers also do not allow you to keep backups on your hosting account or server and may delete the backups without your consent after a certain period of time.
+#### Validate permission
+The following setting makes PHP check that the current user has the necessary permissions to access the cached file. It should be enabled at the root php.ini configuration level to prevent users from accessing other users cached files.
+`opcache.validate_permission = On`
 
-**Consider reviewing your hosting provider's policies on backups and the storage of backups. Many hosting providers can provide good advice and support for setting up thorough, multi-level backup solutions for WordPress.**
+This setting is not enabled by default. It is also only available as of PHP 7.0.14.
 
-### Manually Backing Up WordPress
-You are not required to use a WordPress backup plugin to backup WordPress. The WordPress files and database can be manually copied and exported using a variety of different tools and techniques depending on the levels of access you have to your hosting account's files and databases.
+#### Validate root
+The following setting prevents PHP users from accessing files outside of the chroot'd directory to which they normally would not have access. It should also be added to the root php.ini configuration level to prevent unauthorized access to files.
+`opcache.validate_root = On`
 
-#### Use Hosting Provider's Control Panel or Tools
-Most hosting providers use control panels or administrative tools that let you create different kinds of backups through their interfaces. Consult your hosting provider's documentation or contact their support team for assistance using their tools to generate backups of WordPress.
+This setting is not enabled by default. It is also only available as of PHP 7.0.14.
 
-#### Backing Up WordPress Files
-WordPress files can be backed up using any tool that allows you to access and to download files from your hosting account. These include but are not limited to FTP clients, command-line/shell clients, and web clients. Consult your hosting provider's documentation or contact their support team for assistance with using FTP, command-line, or web clients to access and to download your files to your computer.
+#### Restrict API
+Normally, any PHP user can access the opcache API for viewing the currently cached files and for managing the PHP opcode cache. With some PHP configurations, however, the PHP opcode cache shares the same memory between all users on the server. Sharing the PHP opcode cache between all users means all users can view and access the PHP opcode cache and can access other users' cached PHP files. Restricting the Opcache API prevents PHP scripts run in unauthorized directories from viewing cached files and interacting with the PHP opcode cache manually from within PHP scripts. The following setting defines the directory path PHP scripts must start with to be able to access the Opcache API.
+`opcache.restrict_api = '/some/folder/path'`
 
-#### Backing Up WordPress Database
-The WordPress database is not stored in a file in your hosting account that can be easily or simply downloaded or copied. It must be exported using a database backup tool. Most hosting providers offer tools for accessing and backing up databases. If your hosting account does not have a database management tool, you can install phpMyAdmin, a popular, open-source tool for managing MySQL databases (the WordPress database is usually a MySQL database). [phpMyAdmin's makers have written documentation for installing phpMyAdmin](https://docs.phpmyadmin.net/en/latest/setup.html). After installing phpMyAdmin, you should be able to use your WordPress database username and database password from your wp-config.php file to login using phpMyAdmin.
+The default value for the setting is `''`, which means there are no restrictions on which PHP scripts can access the Opcache API. This setting should be defined in the root php.ini for your PHP configuration in order to prevent users from overriding it.
 
-**phpMyAdmin can be used to manage and make changes to your database in addition to backing up your database. Be careful not to accidentally edit your database through phpMyAdmin.**
+### Object Caching Security
+There are several solutions for providing database object caching for WordPress. Each comes with its own configuration requirements for providing a secure environment while using database object caching.
 
-To backup a database through phpMyAdmin, select the database in phpMyAdmin by clicking on the name of the database in the tree-view on the left-hand side of the phpMyAdmin page. phpMyAdmin should reload and show the tables in the currently selected database. Next, click on "Export" from the menu on the top of the page. There should be a Quick option and a Custom option for exporting the database. The Quick option is usually good enough for a basic backup. If you choose the Custom option, select all tables in the database, select SQL from the Format drop-down menu, check "Add DROP TABLE", and click Go. The database will then be downloaded through your Internet browser.
+#### Redis
+Redis is a lightweight, high-performance key-value database server commonly used to cache the results from WordPress database queries. In its default configuration, Redis uses a single database and does not require a username and password to access the database. Redis should also only be accessible from authorized network hosts.
 
+##### Redis databases
+Redis provides 16 databases, number 0 to 15 by default. Redis clients should be configured to use different databases instead of the default database (number 0). Redis can be configured to have additional databases, but that it outside the scope of this document.
 
-### Security of the configuration file
+##### Redis user credentials
+If Redis is going to be used for database object caching, the Redis server should be configured to require access credentials.
 
-The `wp-config.php` file contains database credentials and other sensitive information. After installing WordPress, the `wp-config.php` file can be executed. If, for some reason, processing of PHP files by the web server is turned off, hackers can access the content of the wp-config.php file. As a precaution you should verify that unauthorized access to the `wp-config.php` file is blocked by disallowing web access to the file.
+##### Redis network hosts
+The Redis server in its default configuration listens on port 6379. The port can be changed in Redis's configuration, but whatever port is used should be protected by a firewall to prevent unauthorized access.
+
+##### Redis cache key salt
+If using Redis for database object caching, using a unique Redis cache key salt will help prevent cache collisions -- when two websites try to cache content using the same key. Cache collisions can result in websites accessing the cached data for other websites and can cause other undesirable and unexpected behaviors. The Redis cache key salt is usually configured through the Redis caching plugin or Redis client used to enable Redis database object caching in WordPress websites.
+
+#### Memcached
+Memcached is a memory object caching solution commonly used to provide database object caching for WordPress. One of the most important configuration concerns for memcached is preventing memcached from being accessed by the public internet. Putting memcached servers behind a firewall is one of the most important parts of using memcached securely for WordPress database object caching.
+
+### WordPress Automatic Updates
+WordPress has the ability to automatically apply security updates. This should be enabled in almost all cases. The exception is if files are not writeable, outside of `wp-content/uploads`, for security reasons. In this instance an alternative, expedient, and, preferably, automatic update process should be made available. See [Configuring Automatic Background Updates
+](https://codex.wordpress.org/Configuring_Automatic_Background_Updates) for details on automatic update configuration.

@@ -6,11 +6,11 @@ A WordPress site is composed of three (3) main components:
 
 <dl>
 <dt>Code</dt>
-	<dd>WordPress core, zero (0) or more plugins, and one (1) or more themes _(but with only one theme active at a time)_ </dd>
+	<dd>WordPress core, zero (0) or more plugins, and one (1) or more themes.</dd>
 <dt>Assets</dt>
- 	<dd>Images, documents and other user-upload files, and maybe plugin or theme cache or configuration files</dd>
+ 	<dd>Images, documents and other user-upload files, and maybe plugin or theme cache or configuration files.</dd>
 <dt>Database</dt>		  
-	<dd>A MySQL database containing your posts, pages, comments, links, settings, and more</dd>
+	<dd>A MySQL database containing your posts, pages, comments, links, settings, and more.</dd>
 </dl>
 
 > Your WordPress database contains every post, every comment and every link you have on your blog. If your database gets erased or corrupted, you stand to lose everything you have written. There are many reasons why this could happen and not all are things you can control. With a proper backup of your WordPress database and files, you can quickly restore things back to normal.

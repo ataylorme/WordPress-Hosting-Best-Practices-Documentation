@@ -40,6 +40,6 @@ Uptime monitoring is traditionally done by checking one or more URLs on the site
 While your site may be "up", how do you know that it's performing well? Performance monitoring is similar to uptime monitoring, but it also takes note of certain metrics that could indicate trouble.  Metrics like "page load time" and "number of transactions" are monitored and reported regularly to help keep you ahead of performance issues.
 
 ## Version Control
-Version control manages changes to individual components of a site over time. In the case of a WordPress site, version control keeps a history of the code files. In addition to regular backups, version control is a great safety net for your WordPress site. If something goes wrong you can go back in the history and restore the site to a previous state, perhaps before you installed a troublesome plugin.
+Version control is a way of tracking the changes made to files over time, especially for sites running WordPress for example. It allows users to track the revision history of code and to revert or apply changes easily via the command line. It is also a good way to debug your website if something goes wrong as you can quickly restore to a previous version very quickly without doing a full backup. 
 
 A lot of WordPress hosts offer version control but there are third-party services and self hosted options as well.

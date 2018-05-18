@@ -1,11 +1,11 @@
 # Security
-The goal of the page is to inform users who manage a WordPress site about general security best practices both in terms of environment level items, such as file permissions, as well as application level items, such as setting up proper user roles, so they have a better foundation for security than setting up WordPress somewhere with no additional configuration.
+The goal of the page is to inform users who manage a WordPress site about general security best practices both in terms of environment level items, such as file permissions, as well as application-level items, such as setting up proper user roles, so they have a better foundation for security than setting up WordPress somewhere with no additional configuration.
 
 **The most important thing to do for WordPress security is to keep WordPress itself and all installed plugins and themes up to date. It is also encouraged for users to choose themes and plugins that are actively receiving updates.**
 
 WordPress is committed to providing a secure experience for users. Information about WordPress's official stance on security and a general discussion about WordPress's overall aims for security can be found on [WordPress.org's Security page](https://wordpress.org/about/security/).
 
-This guide borrows heavily from the WordPress Codex's guide on [Hardening WordPress](https://codex.wordpress.org/Hardening_WordPress). Since it's publicly editible, advice in the codex should be viewed with caution.
+This guide borrows heavily from the WordPress Codex's guide on [Hardening WordPress](https://codex.wordpress.org/Hardening_WordPress). Since it's publicly editable, advice in the codex should be viewed with caution.
 
 Keeping any system, not just WordPress, secure is continuous work. Good security requires careful planning, monitoring, and periodic maintenance.
 
@@ -24,15 +24,15 @@ It is also recommended for hosts to throttle login attempts at the network and s
 ### A Note About Usernames
 Some WordPress security guides recommend using unique usernames for WordPress administrator accounts. While well-intentioned, WordPress's REST API allows anyone to view many of the users for your WordPress website. You can see this for yourself by sending a request to the endpoint at  /wp-json/wp/v2/users.
 
-> The WordPress project doesn’t consider usernames or user ids to be private or secure information. A username is part of your online identity. It is meant to identify, not verify, who you are saying you are. Verification is the job of the password.
+> The WordPress project doesn’t consider usernames or user IDs to be private or secure information. A username is part of your online identity. It is meant to identify, not verify, who you are saying you are. Verification is the job of the password.
 - Quoted from the [WordPress Security Handbook](https://make.wordpress.org/core/handbook/testing/reporting-security-vulnerabilities/#why-are-disclosures-of-usernames-or-user-ids-not-a-security-issue)
 
 ### Two-Factor Authentication
-Two-factor authentication, also know as 2FA or two-step authentication, is a login scheme that uses a separate, second form of authentication when a user attempts to login to a service with two-factor authentication enabled. The exact two-factor authentication setup varies from service to service, but it usually involves entering in a code or interacting with an application on a smartphone when attempting to login to a service. WordPress does not have two-factor authentication by default; however, [there are several plugins that provide two-factor authentication for self-hosted WordPress websites](http://wordpress.org/plugins/tags/two-factor-authentication).
+Two-factor authentication, also known as 2FA or two-step authentication, is a login scheme that uses a separate, second form of authentication when a user attempts to log in to a service with two-factor authentication enabled. The exact two-factor authentication setup varies from service to service, but it usually involves entering a code or interacting with an application on a smartphone when attempting to log in to a service. WordPress does not have two-factor authentication by default; however, [there are several plugins that provide two-factor authentication for self-hosted WordPress websites](http://wordpress.org/plugins/tags/two-factor-authentication).
 
 ## File System
 
-The setup of your hosting account's file system can have a large impact on the security of WordPress. Setting proper file persmissions and ownership is important for ensuring unauthorized users cannot access or modify WordPress's files.
+The setup of your hosting account's file system can have a large impact on the security of WordPress. Setting proper file permissions and ownership is important for ensuring unauthorized users cannot access or modify WordPress's files.
 
 ### File Permissions
 
@@ -52,7 +52,7 @@ Some programs will represent the different kinds of access using letters instead
 | Symbolic         | Numeric         | Permissions                                                                                  |
 |:----------------:|:---------------:|:--------------------------------------------------------------------------------------------:|
 |    ----------    |       000       | no permissions                                                                               |
-|    -r--------    |       400       | read only for user                                                                           |
+|    -r--------    |       400       | read only for the user                                                                           |
 |    -rw-------    |       600       | read & write only for user                                                                   |
 |    -rwx------    |       700       | read, write, & execute only for user                                                         |
 |    -rwxr-xr-x    |       755       | read, write, & execute for user, only read & execute for group and everyone else             |
@@ -61,7 +61,7 @@ Some programs will represent the different kinds of access using letters instead
 
 #### Recommended Default Linux File Permissions
 
-File permissions are going to be different based on needs and server setup. Keep file permissions as restricted as possible, avoiding giving permissions that are not needed. Keep in mind WordPress needs the ability to write to it's own files for updates, including automatic security updates.
+File permissions are going to be different based on needs and server setup. Keep file permissions as restricted as possible, avoiding giving permissions that are not needed. Keep in mind WordPress needs the ability to write to its own files for updates, including automatic security updates.
 
 
 ### User Accounts
@@ -75,8 +75,8 @@ Additionally, WordPress stores assets and user uploaded files in a special uploa
 ## WordPress Users and Roles
 WordPress itself defines 5 default types of users (6 if WordPress Multisite is enabled). They are:
 
-* Super Administrator (If WordPress Multisite is enabled) - a super user with access to the special WordPress Multisite administration features and all other normal administration features.
-* Administrator (slug: 'administrator') - a super user for the individual WordPress website with access to all of the administration features in the website.
+* Super Administrator (If WordPress Multisite is enabled) - a superuser with access to the special WordPress Multisite administration features and all other normal administration features.
+* Administrator (slug: 'administrator') - a superuser for the individual WordPress website with access to all of the administration features in the website.
 * Editor (slug: 'editor') - a user who can publish posts and manage the posts of other users.
 * Author (slug: 'author') - a user who can publish posts and manage the user's own posts.
 * Contributor (slug: 'contributor') - a user who can write and manage the user's own posts but cannot publish them.
@@ -84,7 +84,7 @@ WordPress itself defines 5 default types of users (6 if WordPress Multisite is e
 
 Super Administrators, Administrators, and Editors are all considered "trusted" users, meaning they have capabilities that could be abused to damage or compromise a WordPress site.
 
-When WordPress is first installed, an Administrator account is automatically setup.
+When WordPress is first installed, an Administrator account is automatically set up.
 
 Plugins and themes can modify existing, as well as add additional types of, users and capabilities to WordPress beyond the defaults. These additional options are commonly used by plugins and themes to manage the functionality they add to WordPress.
 
@@ -124,7 +124,7 @@ There are several solutions for providing database object caching for WordPress.
 Redis is a lightweight, high-performance key-value database server commonly used to cache the results from WordPress database queries. In its default configuration, Redis uses a single database and does not require a username and password to access the database. Redis should also only be accessible from authorized network hosts.
 
 ##### Redis databases
-Redis provides 16 databases, number 0 to 15 by default. Redis clients should be configured to use different databases instead of the default database (number 0). Redis can be configured to have additional databases, but that it outside the scope of this document.
+Redis provides 16 databases, number 0 to 15 by default. Redis clients should be configured to use different databases instead of the default database (number 0). Redis can be configured to have additional databases, but that is outside the scope of this document.
 
 ##### Redis user credentials
 If Redis is going to be used for database object caching, the Redis server should be configured to require access credentials.
@@ -139,5 +139,5 @@ If using Redis for database object caching, using a unique Redis cache key salt 
 Memcached is a memory object caching solution commonly used to provide database object caching for WordPress. One of the most important configuration concerns for memcached is preventing memcached from being accessed by the public internet. Putting memcached servers behind a firewall is one of the most important parts of using memcached securely for WordPress database object caching.
 
 ### WordPress Automatic Updates
-WordPress has the ability to automatically apply security updates. This should be enabled in almost all cases. The exception is if files are not writeable, outside of `wp-content/uploads`, for security reasons. In this instance an alternative, expedient, and, preferably, automatic update process should be made available. See [Configuring Automatic Background Updates
+WordPress has the ability to automatically apply security updates. This should be enabled in almost all cases. The exception is if files are not writeable, outside of `wp-content/uploads`, for security reasons. In this instance, an alternative, expedient, and, preferably, automatic update process should be made available. See [Configuring Automatic Background Updates
 ](https://codex.wordpress.org/Configuring_Automatic_Background_Updates) for details on automatic update configuration.

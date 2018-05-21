@@ -50,6 +50,7 @@ Op-code caching can make web servers use fewer resources when running WordPress;
 ### Fragment Caching
 
 ## Content Distribution Network (CDN)
+Content distribution networks are made up of global endpoints that can provide caching closer to the end user. Caching items at physical locations closer to the end user improve performance and latency by decreasing the round-trip network time. Examples of items that can be cached by a CDN are static assets (CSS< JavaScript, and images), REST API responses, and full page cache responses.
 
 ## PHP
 

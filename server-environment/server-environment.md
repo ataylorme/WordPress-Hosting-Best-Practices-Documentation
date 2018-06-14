@@ -5,13 +5,14 @@ WordPress will run on a minimum server environment. However, WordPress doesn't r
 ### Recommended Servers
 WordPress recommends to use one of these servers:
 * Apache 2.4 or higher
-* NGINX 
-
+* NGINX 1.14
+//TODO: What about LiteSpeed?
 ### Apache Configurations
 #### .htaccess
-
+//TODO: Add details about a good and secure .htaccess configuration working on Apache 2.4 
 
 ### NGINX Configuration
+//TODO: More about tweaking nginx for a good and secure WordPress 
 
 
 ## PHP 
@@ -55,5 +56,6 @@ These extensions are used for file changes, such as updates and plugin/theme ins
 WordPress recommends the following settings for your Database:
 * MySQL 5.6 or greater
 * MariaDB 10.0 or greater
-
-### Configuration
+//Any other Database Engines supported and recommended? 
+### MySQL and MariaDB Configuration
+//TODO: Add more details to database configuration 

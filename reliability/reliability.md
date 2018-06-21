@@ -30,7 +30,7 @@ Uptime monitoring is traditionally done at the server level or by checking one o
 While a site's services may be responding, to a user, a site being "up" means more than this to them. Performance monitoring is similar to uptime monitoring, but also takes note of certain metrics that could indicate trouble. Metrics like "page load time" and "slowest average transactions" should be monitored and reported regularly to help keep you ahead of performance issues. Monitoring slow logs for problematic queries or requests can also help keep user sites stable. MySQL, PHP-FPM, and others provide options to capture these for monitoring.
 
 ### Performance Profiling
-A best practise is to use profiling tools like e.g. New Relic, AppDynamics or Tideways to unleash performance bottlenecks of your website and infrastructure. Those tools will tell you exactly which code, http request or database query is causing your poor reponse time of your website.
+It is best practice to use performance profiling tools, such as New Relic, AppDynamics or Tideways, to diagnose the performance bottlenecks of your website and infrastructure. These tools will give you insight such as slow performing functions, external HTTP requests, slow database queries and more that are causing poor performance.
 
 ## Version Control
 Version control is a way of tracking the changes made to files over time by different people, such as the code for a website or another application. It allows people to track the revision history of code and to revert or apply changes easily via the command line. It is also a good way to debug your website if something goes wrong, as you can quickly restore to a previous state of the site's code without restoring from a full backup.

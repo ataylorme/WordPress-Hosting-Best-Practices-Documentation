@@ -98,8 +98,6 @@ Plugins and themes can modify existing, as well as add additional types of, user
 
 ## HTTPS and SSL
 
-> Link to this guide with more info about implementing HTTPS for WordPress? https://make.wordpress.org/support/user-manual/web-publishing/https-for-wordpress/
-
 WordPress is fully compatible with HTTPS when an SSL certificate is installed and available for the web server to use. Support for HTTPS is strongly recommended to help maintain the security of both WordPress logins and site visitors.
 
 ## Caching Security

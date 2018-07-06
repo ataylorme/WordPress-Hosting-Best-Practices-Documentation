@@ -54,9 +54,9 @@ Op-code caching can make web servers use fewer resources when running WordPress;
 
 ### Fragment Caching
 
-Fragment caching is the temporary storage of expensive server-side operations to avoid taxing web servers with repetitive tasks. WordPress doesn't fragment cache anything out-of-the-box, but it's become a common practice for potentially expensive operations such as generating Menu markup, Widget markup and slow MySQL or HTTP queries.
+Fragment caching is the temporary storage of expensive or long-running server-side operations to avoid taxing web servers and delayed delivery to visitors. It's become a common practice for operations such as generating Menu markup, Widget markup and slow MySQL or HTTP responses. Core currently uses transients to cache HTTP calls to WordPress.org APIs for updates and events.
 
-Fragment caching is particularly beneficial when appropriately paired with full-page caching. Perhaps there's a uniform `<footer>` displayed on every page we can store in a fragment. When the server needs to rebuild static cache files and a fragment is found, it saves the server from running Menu/Widget queries to generate the footer markup on every page.
+Fragment caching is particularly beneficial when appropriately paired with full-page caching. Perhaps there's uniform `<footer>` markup displayed on every page that can be temporarily stored. When the server needs to rebuild static cache files and a fragment is found, it saves the server from running Menu/Widget queries to generate the footer markup on every page.
 
 Significant caution should be exercised blanket caching Core resources. If a site Menu relies on dynamic `.current-menu-item` classes, storing the menu markup in a fragment will "burn" that class in, no longer highlighting the correct page as a user navigates. Any caching of WordPress Core resources should be opt-in and integrate an appropriate flushing mechanism for when users modify the resource.
 

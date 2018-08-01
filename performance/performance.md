@@ -54,6 +54,15 @@ Op-code caching can make web servers use fewer resources when running WordPress;
 
 ### Fragment Caching
 
+Fragment caching is the temporary storage of expensive or long-running server-side operations to avoid taxing web servers and delayed delivery to visitors. It's become a common practice for operations such as generating Menu markup, Widget markup and slow MySQL or HTTP responses. Core currently uses transients to cache HTTP calls to WordPress.org APIs for updates and events.
+
+Fragment caching is particularly beneficial when appropriately paired with full-page caching. Perhaps there's uniform `<footer>` markup displayed on every page that can be temporarily stored. When the server needs to rebuild static cache files and a fragment is found, it saves the server from running Menu/Widget queries to generate the footer markup on every page.
+
+Significant caution should be exercised blanket caching Core resources. If a site Menu relies on dynamic `.current-menu-item` classes, storing the menu markup in a fragment will "burn" that class in, no longer highlighting the correct page as a user navigates. Any caching of WordPress Core resources should be opt-in and integrate an appropriate flushing mechanism for when users modify the resource.
+
+The Transients API should always be used for fragment caching instead of directly using `wp_cache_*` functions. In environments without a persistant Object Cache, `set_transient()` will store cache values in the database in the `wp_options` table. However, when Object Cache is enabled, `set_transient()` will wrap `wp_cache_set()`.
+
+
 ## Content Distribution Network (CDN)
 
 Content distribution networks are made up of global endpoints that can provide caching closer to the end user. Caching items at physical locations closer to the end user improve performance and latency by decreasing the round-trip network time. Examples of items that can be cached by a CDN are static assets (CSS< JavaScript, and images), REST API responses, and full page cache responses.

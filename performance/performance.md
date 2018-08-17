@@ -2,6 +2,7 @@
 This section will cover the basics on configuring services for performance with WordPress.
 
 ## Caching
+
 WordPress has a lot of dynamic functionality, but this comes at a cost. Tasks such as processing PHP, querying the database and collecting information from external APIs all take resources and time. 
 
 > Caching saves time for potentially heavy tasks by reusing previously computed results, rather than calculating them for every page view. 
@@ -33,6 +34,7 @@ For any given page load, speed and user experience will result from the combined
 
 
 ### Content Distribution Network (CDN) Cache
+
 Content distribution networks are designed to optimize the network latency between servers and visitors from different geographical locations. Data is distributed amongst endpoints and then visitors get served from the endpoint which is closest to them. 
 
 In addition to optimizing networking latency, CDNs can act as another layer of static and/or full-page caching running on all those endpoints. 
@@ -41,6 +43,7 @@ It’s important to make sure that CDNs are working well with all your other cac
 
 
 ### Full Page Cache
+
 In order to display your content, WordPress does a lot of work under the hood, and all those calculations require server resources and time to complete. For starters, the PHP service on the server has to process the request, load WordPress core, your theme PHP files and all PHP scripts coming from your plugins. The majority of those PHP files make requests to your database, too, which adds to the overall resource footprint of your site. 
 
 The best way to cache these requests is to use a reverse proxy like NGINX or Varnish which stores the output directly into the server memory That saves a lot of processing power because cached content is served straight out of the reverse proxy without hitting your web server, the PHP service or your database service at all. If such technology is not available on your current server setup, you can fallback to storing cached content into your file system. It's slower than reverse proxies and a hit reaches your web server and your PHP service at least once, so it can direct the request to the proper cached file but still - it's much faster than doing all the computing for every request. 
@@ -53,6 +56,7 @@ online store it's imperative that your cart, checkout and profile pages are comp
 ![Full Page Caching Response Example](/assets/full-page-caching-response-example.png)
 
 ### Object Cache
+
 > In 2005, WordPress introduced its internal object cache — a way of automatically storing any data from the database (not just objects) in PHP memory to prevent unnecessary queries. However, out of the box, WordPress will discard all of those objects at the end of the request, requiring them to be rebuilt from scratch for the next page load.
 
 ###### source: [scalewp.io](https://www.scalewp.io/object-caching/)
@@ -69,9 +73,8 @@ For these reasons, persistent object caching support is commonly offered with Ma
 
 ###### source: [WordPress Codex](https://codex.wordpress.org/Transients_API)
 
-**TODO: Consider talking about autoload and Memcached**
-
 ### Opcode Cache
+
 As mentioned in the section on full page caching, WordPress processes PHP scripts as part of producing the HTML, CSS and JavaScript for a browser to load. It takes time for the web server to read each PHP script WordPress needs, to compile the script and to run it. By default, PHP recompiles these scripts for each request made. Full page caching can reduce how much the web server has to do this depending on what kind of full page caching is used, but the original pages still need to be generated. For example, WordPress caching plugins still have to check if they need to rebuild their caches. PHP scripts also have to be read, compiled, and run for WordPress to generate any dynamic, uncached content like comments or the page for a WooCommerce store and for WordPress to show the admin dashboard. Using opcode caching can help speed up your server since it can run WordPress without having to read and compile PHP scripts for every single page visit.
 
 Opcode caching stores a compiled copy of every PHP script in memory or on disk. When the web server starts processing PHP scripts for WordPress, the web server checks the opcode cache for a cached copy of the PHP script. If there is a cached copy, the web server can skip straight to running the PHP script using the cached copy instead of having to read and compile the script again. Skipping this reading and compiling PHP scripts can greatly improve the web server's resource usage and enable WordPress to serve many more requests than it might have been able to otherwise.
@@ -79,6 +82,7 @@ Opcode caching stores a compiled copy of every PHP script in memory or on disk. 
 Opcode caching can help web servers use fewer resources when running WordPress; however, like with full page caching, opcode caching can cause changes to WordPress, such as installing or removing plugins and themes or updating WordPress, from showing up right away. It can be useful to manually purge the opcode cache after making any changes to the PHP files that make up WordPress.
 
 ### Fragment Cache
+
 This caching method allows saving sections of otherwise non-cacheable dynamic website content. It can help especially for sites where the majority of the page is static, but has certain dynamic elements, like a shopping cart, or for membership sites.
 
 In the WordPress context, developers often store parts of the page using the WordPress transients/object cache API. In these cases, providing a persistent object cache will allow that caching to happen outside of the database.
@@ -86,7 +90,18 @@ In the WordPress context, developers often store parts of the page using the Wor
 Storing these fragments separately in a front end cache is not natively supported by WordPress, and means both manually configuring the sections of the page to be cached, and configuring your front-end cache, whether it be Nginx, Varnish, or otherwise, to support fragment caching. This is usually an advanced technique, and reserved for sites or hosting platforms with very high dynamic traffic needs.
 
 ## Purging / Busting / Clearing Caches
+
 Purging caches is as important as storing them. You have to make sure that all layers of caching are cleared when necessary.
+
+Fragment caching is the temporary storage of expensive or long-running server-side operations to avoid taxing web servers and delayed delivery to visitors. It's become a common practice for operations such as generating Menu markup, Widget markup and slow MySQL or HTTP responses. Core currently uses transients to cache HTTP calls to WordPress.org APIs for updates and events.
+
+Fragment caching is particularly beneficial when appropriately paired with full-page caching. Perhaps there's uniform `<footer>` markup displayed on every page that can be temporarily stored. When the server needs to rebuild static cache files and a fragment is found, it saves the server from running Menu/Widget queries to generate the footer markup on every page.
+
+Significant caution should be exercised blanket caching Core resources. If a site Menu relies on dynamic `.current-menu-item` classes, storing the menu markup in a fragment will "burn" that class in, no longer highlighting the correct page as a user navigates. Any caching of WordPress Core resources should be opt-in and integrate an appropriate flushing mechanism for when users modify the resource.
+
+The Transients API should always be used for fragment caching instead of directly using `wp_cache_*` functions. In environments without a persistant Object Cache, `set_transient()` will store cache values in the database in the `wp_options` table. However, when Object Cache is enabled, `set_transient()` will wrap `wp_cache_set()`.
+
+## Content Distribution Network (CDN)
 
 There are several layers of caches that you should consider:
 
@@ -95,7 +110,6 @@ Server Caches - full page cache, object caching, static caching is stored on the
 CDN Caches - those usually copy the server caches but are stored on the CDN’s endpoints so you have to make sure they are cleared when server cache is purged.
 
 Browser Caches - modern browsers store locally a lot of information in order to render sites faster - usually CSS, JS, Fonts, Images are stored on your visitors computers and unless expired loaded from there. You have to make sure that you notify  visitors browsers that certain resource has been updated so they don’t load old versions of it. That’s usually done with heathers and eTags explained below.
-
 
 ## PHP
 
@@ -114,14 +128,17 @@ More information about the support versions of PHP can always be found [on PHP's
 A good approach is to test a website for compatibility with PHP7 before upgrading. You can use a [WP-CLI command](https://github.com/danielbachhuber/php-compat-command) for that purpose and make sure all used plugins and the active theme will work fine.
 
 ### Configuration
+
 PHP is primarily configured using a configuration file, `php.ini`, from which PHP reads all of its settings and configuration at runtime, whether through CGI/FastCGI, or a process manager like PHP-FPM.
 
 #### Timeouts
+
 PHP has several timeout settings that limit the time different aspects of the rendering process - maximum execution time, upload file size, etc. It is important that you select those carefully in compliance with other limitations that you have on your web server. When configuring your timeouts, it's important to select values that work well together. For example, it doesn't make sense to have a very high script execution timeout on your PHP service, if the Apache timeout is lower than that - in such case, if the request takes longer, it will be killed by the web server no matter your PHP timeout setting. 
 
 Note, that processes take different amount of time, depending on the server load and those limitations are placed to ensure that your server functions properly. If you have high server load, processes may take longer to complete thus causing a cascade effect leading to even more server load. That's why it's a matter of balance between giving enough time for your scripts to be compiled and ensuring that you're within normal server loads.
 
 #### Memory Limits
+
 WordPress requires server memory to operate properly. It has two main values that define the amount of memory the application is allowed to use which are stored in the **wp-config.php** file:
 
 ```
@@ -136,8 +153,8 @@ Since the WordPress backend usually requires more memory, there's a separate set
 
 WordPress will attempt to raise the PHP `memory_limit` to the specified values above if it has permission to do so.
 
-
 #### File Upload Sizes
+
 When uploading media files and other content to WordPress using the WordPress admin dashboard, WordPress uses PHP to process the uploads. PHP's configuration includes limits on the size of files that can be uploaded through PHP and on the size of requests that can be sent to the web server for processing. You need to match those with your existing processing timeouts.
 
 The limit on the size of individual files can be configured using the `upload_max_filesize` `php.ini` directive.
@@ -153,4 +170,7 @@ The value for `post_max_size` must be greater than or equal to the value for `up
 Note, that `post_max_size` applies to every PHP request and not only uploads. Usually for regular requests it’s enough but you may want to check it if large amount of data is transmitted through PHP.
 
 #### Replacing WordPress' Cron Triggers
+
 The `wp-cron.php` is responsible for causing certain tasks to be scheduled and executed automatically. Every time someone visits your website, `wp-cron.php` checks whether it is time to execute a job or not. Even though these checks are small and fast they consume time and produce load. For this reason, it's worth considering setting the `DISABLE_WP_CRON` constant and considering using an alternative method to trigger WordPress' cron system.
+
+### Percona

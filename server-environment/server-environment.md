@@ -76,7 +76,7 @@ Percona server is a drop-in replacement for MySQL, focused on performance. Altho
 
 ### Recommended Versions
 
-WordPress recommends the following settings for your Database:
+WordPress recommends the following versions for your Database:
 
 * MySQL 5.6 or greater
 * MariaDB 10.1 or greater

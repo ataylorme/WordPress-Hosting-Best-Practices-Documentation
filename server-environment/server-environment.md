@@ -22,6 +22,7 @@ WordPress recommends to use one of these servers:
 
 PHP `7.3` or greater is highly recommended. If you are in a legacy environment where you only have older PHP or MySQL versions, WordPress also works with PHP 5.6.20+ and MySQL 5.0+, but these versions have reached official End Of Life and as such may expose your site to security vulnerabilities.
 
+
 ### PHP Extensions
 
 WordPress core makes use of PHP extensions. If the preferred extension is missing WordPress will either have to do more work to do the task the module helps with or, in the worst case, will remove functionality. Therefore the PHP extensions listed below are recommended.
@@ -78,6 +79,6 @@ Percona server is a drop-in replacement for MySQL, focused on performance. Altho
 WordPress recommends the following settings for your Database:
 
 * MySQL 5.6 or greater
-* MariaDB 10.0 or greater
+* MariaDB 10.1 or greater
 
 ### MySQL and MariaDB Configuration
